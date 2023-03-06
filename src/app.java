@@ -1,5 +1,7 @@
+import gui.Welcome;
+
 class app{
     public static void main(String[] args) {
-        System.out.println("boy");
+        Welcome w = new Welcome();
     }
 }
