@@ -1,4 +1,5 @@
-
+import java.io.*;
+import java.util.Scanner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,11 +44,12 @@ public class RegisterPage implements Screen {
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Gui.users.add(new User(usernameField.getText()));
+                Gui.users.add(new User(usernameField.getText(),passwordField.getText()));
                 Gui.popup.setVisible(false);
                 Gui.popupScreen.clear();
                 for (User user : Gui.users) {
-                    System.out.println(user.getUsername());
+                    //System.out.println(user.getUsername());
+                    writeToFile(user.getUsername(), user.getPassword());
                 }
             }
         });
@@ -66,5 +68,28 @@ public class RegisterPage implements Screen {
         confirmPasswordLabel.setBounds(50, 200, 200, 50);
         confirmPasswordField.setBounds(50, 250, 200, 50);
         registerButton.setBounds(50, 325, 200, 50);
+    }
+
+    void writeToFile(String username, String password){
+        try{
+            FileWriter writer = new FileWriter("accounts.txt");
+            writer.write(username + "\n" + password);
+            writer.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    void readFile(){
+        try{
+            File o = new File("accounts.txt");
+            Scanner scRead = new Scanner(o);
+            while(scRead.hasNextLine()){
+                Gui.users.add(new User(scRead.nextLine(),scRead.nextLine()));
+            }
+            scRead.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }
