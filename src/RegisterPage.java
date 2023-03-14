@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.Scanner;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,13 +41,10 @@ public class RegisterPage implements Screen {
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Main.users.add(new User(usernameField.getText(),"Lol!",passwordField.getText()));
+                Main.users.add(new User(usernameField.getText(),usernameField.getText(),passwordField.getText()));
                 Main.popup.setVisible(false);
                 Main.popupScreen.clear();
-                for (User user : Main.users) {
-                    //System.out.println(user.getUsername());
-                    writeToFile(user.getUsername(), user.getFullName(), user.getPassword());
-                }
+                Main.login(usernameField.getText(), passwordField.getText());
             }
         });
         usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");
@@ -68,28 +62,5 @@ public class RegisterPage implements Screen {
         confirmPasswordLabel.setBounds(50, 200, 200, 50);
         confirmPasswordField.setBounds(50, 250, 200, 50);
         registerButton.setBounds(50, 325, 200, 50);
-    }
-
-    void writeToFile(String username, String fullName, String password){
-        try{
-            FileWriter writer = new FileWriter("accounts.txt");
-            writer.write(username + "\n"+fullName+"\n" + password);
-            writer.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    void readFile(){
-        try{
-            File o = new File("accounts.txt");
-            Scanner scRead = new Scanner(o);
-            while(scRead.hasNextLine()){
-                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),scRead.nextLine()));
-            }
-            scRead.close();
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
     }
 }

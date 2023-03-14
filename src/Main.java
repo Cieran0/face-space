@@ -1,9 +1,14 @@
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     
@@ -20,6 +25,7 @@ public class Main {
 
     public static WindowListener wl = new WindowListener() {
         public void windowClosing(WindowEvent arg0) {
+            writeToFile(users);
             System.exit(0);
         }
 
@@ -35,9 +41,8 @@ public class Main {
         users.add(new User("cieran0","Cieran O'Neill", "password?"));
         users.add(new User("benh99","Ben H", "penis"));
         users.add(new User("micha","Baldie McBaldface", "help"));
-        currentUser=users.get(0);
         for (int i = 0; i < users.size(); i++) {
-            currentUser.addFriend(i);
+            users.get(0).addFriend(i);
         }
         menu.addComponents();
         popup.setSize(POPUP_WINDOW_WIDTH,POPUP_WINDOW_HEIGHT);//300 width and 500 height  
@@ -50,11 +55,44 @@ public class Main {
     }
 
     public static void login(String username, String password) {
-        if(!(currentUser.getUsername().equals(username) && currentUser.getPassword().equals(password)))
+        boolean success = false;
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                success = true;
+                currentUser = user;
+                break;
+            }
+        }
+        if(!success)
             return;
         menu.clear();
         menu = new HomePage(currentUser);
         menu.addComponents();
+    }
+
+    public static void writeToFile(List<User> users){
+        try{
+            FileWriter writer = new FileWriter("accounts.txt");
+            for (User user : users) {
+                writer.write(user.getUsername() + "\n"+user.getFullName()+"\n" + user.getPassword() + "\n");
+            }
+            writer.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void readFile(){
+        try{
+            File o = new File("accounts.txt");
+            Scanner scRead = new Scanner(o);
+            while(scRead.hasNextLine()){
+                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),scRead.nextLine()));
+            }
+            scRead.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }
 
