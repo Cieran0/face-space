@@ -1,5 +1,8 @@
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +25,16 @@ public class DetailsPanel extends JPanel {
             details[i].setBounds(0, i*50, 200, 20);
             this.add(details[i]);
         }
+        JButton logout = new JButton("Logout");
+        logout.setBounds(100, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
+        logout.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Main.logout();
+            }
+        }
+        );
+        this.add(logout);
         this.revalidate();
         this.repaint();
     }

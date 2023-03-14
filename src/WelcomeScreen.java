@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class MainMenu implements Screen {
+public class WelcomeScreen implements Screen {
 
     JButton login;
     JButton register;
@@ -29,7 +29,7 @@ public class MainMenu implements Screen {
         Main.f.add(face);
     }
 
-    public MainMenu() {
+    public WelcomeScreen() {
         login = new JButton("Login");
         register = new JButton("Register");
         face = new JLabel("<html><span style='font-size:75px;'>FaceSpace</span></html>",SwingConstants.CENTER);

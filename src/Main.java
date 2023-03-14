@@ -16,7 +16,7 @@ public class Main {
     public static final Integer MAIN_WINDOW_HEIGHT = 720;
     public static final Integer POPUP_WINDOW_WIDTH = 300;
     public static final Integer POPUP_WINDOW_HEIGHT = 400;
-    public static Screen menu = new MainMenu();
+    public static Screen menu = new WelcomeScreen();
     public static JFrame f = new JFrame("DEBUG");//creating instance of JFrame  
     public static JFrame popup = new JFrame("DEBUG");
     public static Screen popupScreen;
@@ -68,6 +68,13 @@ public class Main {
         menu.clear();
         menu = new HomePage(currentUser);
         menu.addComponents();
+    }
+
+    public static void logout() {
+        menu.clear();
+        menu = new WelcomeScreen();
+        menu.addComponents();
+        currentUser = null;
     }
 
     public static void writeToFile(List<User> users){

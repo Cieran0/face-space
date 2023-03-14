@@ -6,8 +6,8 @@ public class HomePage implements Screen{
     public void clear(){
         Main.f.remove(friendsPanel);
         Main.f.remove(detailsPanel);
-        Main.popup.revalidate();
-        Main.popup.repaint();
+        Main.f.revalidate();
+        Main.f.repaint();
     }
 
     public void addComponents(){
