@@ -16,31 +16,30 @@ public class LoginPage implements Screen {
     JLabel passwordLabel;
 
     public void clear() {
-        Gui.popup.remove(loginButton);
-        Gui.popup.remove(usernameField);
-        Gui.popup.remove(passwordField);
-        Gui.popup.remove(usernameLabel);
-        Gui.popup.remove(passwordLabel);
-        Gui.popup.revalidate();
-        Gui.popup.repaint();
+        Main.popup.remove(loginButton);
+        Main.popup.remove(usernameField);
+        Main.popup.remove(passwordField);
+        Main.popup.remove(usernameLabel);
+        Main.popup.remove(passwordLabel);
+        Main.popup.revalidate();
+        Main.popup.repaint();
     }
 
     public void addComponents() {
-        Gui.popup.add(loginButton);
-        Gui.popup.add(usernameField);
-        Gui.popup.add(passwordField);
-        Gui.popup.add(usernameLabel);
-        Gui.popup.add(passwordLabel);
+        Main.popup.add(loginButton);
+        Main.popup.add(usernameField);
+        Main.popup.add(passwordField);
+        Main.popup.add(usernameLabel);
+        Main.popup.add(passwordLabel);
     }
     
     public LoginPage() {
         loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Gui.popup.setVisible(false);
-                Gui.popupScreen.clear();
-                System.out.println(usernameField.getText());
-                System.out.println(passwordField.getText());
+                Main.popup.setVisible(false);
+                Main.popupScreen.clear();
+                Main.login(usernameField.getText(),passwordField.getText());
             }
         });
         usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");

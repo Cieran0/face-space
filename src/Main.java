@@ -2,18 +2,21 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;  
 import java.util.List;
 
-public class Gui {
+public class Main {
     
+    public static final Integer MAIN_WINDOW_WIDTH = 1280;
+    public static final Integer MAIN_WINDOW_HEIGHT = 720;
+    public static final Integer POPUP_WINDOW_WIDTH = 300;
+    public static final Integer POPUP_WINDOW_HEIGHT = 400;
     public static Screen menu = new MainMenu();
     public static JFrame f = new JFrame("DEBUG");//creating instance of JFrame  
     public static JFrame popup = new JFrame("DEBUG");
     public static Screen popupScreen;
     public static List<User> users = new ArrayList<User>(); 
+    public static User currentUser = null;
 
     public static WindowListener wl = new WindowListener() {
         public void windowClosing(WindowEvent arg0) {
@@ -29,15 +32,29 @@ public class Gui {
     };
 
     public static void main(String[] args) {
-
+        users.add(new User("cieran0","Cieran O'Neill", "password?"));
+        users.add(new User("benh99","Ben H", "penis"));
+        users.add(new User("micha","Baldie McBaldface", "help"));
+        currentUser=users.get(0);
+        for (int i = 0; i < users.size(); i++) {
+            currentUser.addFriend(i);
+        }
         menu.addComponents();
-        popup.setSize(300,400);//300 width and 500 height  
+        popup.setSize(POPUP_WINDOW_WIDTH,POPUP_WINDOW_HEIGHT);//300 width and 500 height  
         popup.setLayout(null);//using no layout managers  
-        f.setSize(1280,720);//400 width and 500 height  
+        f.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT);//400 width and 500 height  
         f.setLayout(null);//using no layout managers  
         f.setVisible(true);//making the frame visible  
         f.addWindowListener(wl);
 
+    }
+
+    public static void login(String username, String password) {
+        if(!(currentUser.getUsername().equals(username) && currentUser.getPassword().equals(password)))
+            return;
+        menu.clear();
+        menu = new HomePage(currentUser);
+        menu.addComponents();
     }
 }
 

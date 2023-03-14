@@ -19,37 +19,37 @@ public class RegisterPage implements Screen {
     JLabel confirmPasswordLabel;
 
     public void clear() {
-        Gui.popup.remove(registerButton);
-        Gui.popup.remove(usernameField);
-        Gui.popup.remove(passwordField);
-        Gui.popup.remove(usernameLabel);
-        Gui.popup.remove(passwordLabel);
-        Gui.popup.remove(confirmPasswordField);
-        Gui.popup.remove(confirmPasswordLabel);
-        Gui.popup.revalidate();
-        Gui.popup.repaint();
+        Main.popup.remove(registerButton);
+        Main.popup.remove(usernameField);
+        Main.popup.remove(passwordField);
+        Main.popup.remove(usernameLabel);
+        Main.popup.remove(passwordLabel);
+        Main.popup.remove(confirmPasswordField);
+        Main.popup.remove(confirmPasswordLabel);
+        Main.popup.revalidate();
+        Main.popup.repaint();
     }
 
     public void addComponents() {
-        Gui.popup.add(registerButton);
-        Gui.popup.add(usernameField);
-        Gui.popup.add(passwordField);
-        Gui.popup.add(usernameLabel);
-        Gui.popup.add(passwordLabel);
-        Gui.popup.add(confirmPasswordField);
-        Gui.popup.add(confirmPasswordLabel);
+        Main.popup.add(registerButton);
+        Main.popup.add(usernameField);
+        Main.popup.add(passwordField);
+        Main.popup.add(usernameLabel);
+        Main.popup.add(passwordLabel);
+        Main.popup.add(confirmPasswordField);
+        Main.popup.add(confirmPasswordLabel);
     }
     
     public RegisterPage() {
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Gui.users.add(new User(usernameField.getText(),passwordField.getText()));
-                Gui.popup.setVisible(false);
-                Gui.popupScreen.clear();
-                for (User user : Gui.users) {
+                Main.users.add(new User(usernameField.getText(),"Lol!",passwordField.getText()));
+                Main.popup.setVisible(false);
+                Main.popupScreen.clear();
+                for (User user : Main.users) {
                     //System.out.println(user.getUsername());
-                    writeToFile(user.getUsername(), user.getPassword());
+                    writeToFile(user.getUsername(), user.getFullName(), user.getPassword());
                 }
             }
         });
@@ -70,10 +70,10 @@ public class RegisterPage implements Screen {
         registerButton.setBounds(50, 325, 200, 50);
     }
 
-    void writeToFile(String username, String password){
+    void writeToFile(String username, String fullName, String password){
         try{
             FileWriter writer = new FileWriter("accounts.txt");
-            writer.write(username + "\n" + password);
+            writer.write(username + "\n"+fullName+"\n" + password);
             writer.close();
         }catch(IOException e){
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class RegisterPage implements Screen {
             File o = new File("accounts.txt");
             Scanner scRead = new Scanner(o);
             while(scRead.hasNextLine()){
-                Gui.users.add(new User(scRead.nextLine(),scRead.nextLine()));
+                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),scRead.nextLine()));
             }
             scRead.close();
         }catch(FileNotFoundException e){

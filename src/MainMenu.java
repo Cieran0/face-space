@@ -15,18 +15,18 @@ public class MainMenu implements Screen {
 
     @Override
     public void clear() {
-        Gui.f.remove(login);
-        Gui.f.remove(register);
-        Gui.f.remove(face);
-        Gui.f.revalidate();
-        Gui.f.repaint();
+        Main.f.remove(login);
+        Main.f.remove(register);
+        Main.f.remove(face);
+        Main.f.revalidate();
+        Main.f.repaint();
     }
 
     @Override
     public void addComponents() {
-        Gui.f.add(login);
-        Gui.f.add(register);
-        Gui.f.add(face);
+        Main.f.add(login);
+        Main.f.add(register);
+        Main.f.add(face);
     }
 
     public MainMenu() {
@@ -39,18 +39,18 @@ public class MainMenu implements Screen {
         login.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Gui.popupScreen = new LoginPage();
-                Gui.popupScreen.addComponents();
-                Gui.popup.setVisible(true);
+                Main.popupScreen = new LoginPage();
+                Main.popupScreen.addComponents();
+                Main.popup.setVisible(true);
             }
         }
         );
         register.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Gui.popupScreen = new RegisterPage();
-                Gui.popupScreen.addComponents();
-                Gui.popup.setVisible(true);
+                Main.popupScreen = new RegisterPage();
+                Main.popupScreen.addComponents();
+                Main.popup.setVisible(true);
             }
         }
         );
