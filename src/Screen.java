@@ -1,6 +1,7 @@
-
+import javax.swing.JFrame;
 
 public interface Screen {
-    void clear();
-    void addComponents();
+    public int getWidth();
+    public int getHeight();
+    public void addComponents(JFrame frame);
 }

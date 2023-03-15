@@ -4,32 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class WelcomeScreen implements Screen {
+public class WelcomePage implements Screen {
 
     JButton login;
     JButton register;
     JLabel face;
 
-    @Override
-    public void clear() {
-        Main.f.remove(login);
-        Main.f.remove(register);
-        Main.f.remove(face);
-        Main.f.revalidate();
-        Main.f.repaint();
+    public void addComponents(JFrame frame) {
+        frame.add(login);
+        frame.add(register);
+        frame.add(face);
     }
 
-    @Override
-    public void addComponents() {
-        Main.f.add(login);
-        Main.f.add(register);
-        Main.f.add(face);
-    }
-
-    public WelcomeScreen() {
+    public WelcomePage() {
         login = new JButton("Login");
         register = new JButton("Register");
         face = new JLabel("<html><span style='font-size:75px;'>FaceSpace</span></html>",SwingConstants.CENTER);
@@ -39,21 +30,27 @@ public class WelcomeScreen implements Screen {
         login.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Main.popupScreen = new LoginPage();
-                Main.popupScreen.addComponents();
-                Main.popup.setVisible(true);
+                Main.setPopupScreen(new LoginPage());
             }
         }
         );
         register.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Main.popupScreen = new RegisterPage();
-                Main.popupScreen.addComponents();
-                Main.popup.setVisible(true);
+                Main.setPopupScreen(new RegisterPage());
             }
         }
         );
     }
-    
+
+    @Override
+    public int getWidth() {
+        return Main.MAIN_WINDOW_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return Main.MAIN_WINDOW_HEIGHT;
+    }
+
 }

@@ -1,19 +1,9 @@
 import java.awt.Color;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class HomePage implements Screen{
-
-    public void clear(){
-        Main.f.remove(friendsPanel);
-        Main.f.remove(detailsPanel);
-        Main.f.revalidate();
-        Main.f.repaint();
-    }
-
-    public void addComponents(){
-        Main.f.add(friendsPanel);
-        Main.f.add(detailsPanel);
-    }
 
     private boolean isCurrentUser;
     private User profile;
@@ -31,5 +21,20 @@ public class HomePage implements Screen{
         this.detailsPanel.setBounds(0, 0, 300, Main.MAIN_WINDOW_HEIGHT);
     }
 
+    @Override
+    public int getWidth() {
+        return Main.MAIN_WINDOW_WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return Main.MAIN_WINDOW_HEIGHT;
+    }
+
+    @Override
+    public void addComponents(JFrame frame) {
+        frame.add(friendsPanel);
+        frame.add(detailsPanel);
+    }
 
 }
