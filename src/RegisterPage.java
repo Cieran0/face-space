@@ -2,10 +2,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class RegisterPage implements Screen {
+
+    public final Integer WIDTH = 300;
+    public final Integer HEIGHT = 400;
 
     JButton registerButton;
     JTextField usernameField;
@@ -15,35 +19,21 @@ public class RegisterPage implements Screen {
     JLabel passwordLabel;
     JLabel confirmPasswordLabel;
 
-    public void clear() {
-        Main.popup.remove(registerButton);
-        Main.popup.remove(usernameField);
-        Main.popup.remove(passwordField);
-        Main.popup.remove(usernameLabel);
-        Main.popup.remove(passwordLabel);
-        Main.popup.remove(confirmPasswordField);
-        Main.popup.remove(confirmPasswordLabel);
-        Main.popup.revalidate();
-        Main.popup.repaint();
-    }
-
-    public void addComponents() {
-        Main.popup.add(registerButton);
-        Main.popup.add(usernameField);
-        Main.popup.add(passwordField);
-        Main.popup.add(usernameLabel);
-        Main.popup.add(passwordLabel);
-        Main.popup.add(confirmPasswordField);
-        Main.popup.add(confirmPasswordLabel);
+    public void addComponents(JFrame frame) {
+        frame.add(registerButton);
+        frame.add(usernameField);
+        frame.add(passwordField);
+        frame.add(usernameLabel);
+        frame.add(passwordLabel);
+        frame.add(confirmPasswordField);
+        frame.add(confirmPasswordLabel);
     }
     
     public RegisterPage() {
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Main.users.add(new User(usernameField.getText(),usernameField.getText(),passwordField.getText()));
-                Main.popup.setVisible(false);
-                Main.popupScreen.clear();
+                Main.users.add(new User(usernameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText())));
                 Main.login(usernameField.getText(), passwordField.getText());
             }
         });
@@ -62,5 +52,15 @@ public class RegisterPage implements Screen {
         confirmPasswordLabel.setBounds(50, 200, 200, 50);
         confirmPasswordField.setBounds(50, 250, 200, 50);
         registerButton.setBounds(50, 325, 200, 50);
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }

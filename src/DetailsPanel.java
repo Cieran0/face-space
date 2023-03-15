@@ -16,7 +16,7 @@ public class DetailsPanel extends JPanel {
 
         JLabel[] details = new JLabel[4];
         details[0] = new JLabel(profile.getFullName());
-        details[1] = new JLabel("Username: " + profile.getUsername());
+        details[1] = new JLabel("@" + profile.getUsername());
         details[2] = new JLabel("Workplace: " + profile.getWorkPlace());
         details[3] = new JLabel("Hometown: " + profile.getHomeTown());
 

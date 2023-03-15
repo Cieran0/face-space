@@ -8,16 +8,16 @@ public class User {
     private String fullName;
     private String workPlace;
     private String homeTown;
-    private String password;
+    private Long passwordHash;
     private List<Integer> friendIDs;
 
     public User() {
 
     }
 
-    public User(String username, String fullName, String password) {
+    public User(String username, String fullName, Long passwordHash) {
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.fullName = fullName;
         this.homeTown = "Hidden";
         this.workPlace = "Hidden";
@@ -56,12 +56,12 @@ public class User {
         this.homeTown = homeTown;
     }
 
-    public String getPassword(){
-        return password;
+    public Long getPasswordHash(){
+        return passwordHash;
     }
 
-    public void setPassword(String newPassword){
-        this.password = newPassword;
+    public void setPasswordHash(Long passwordHash){
+        this.passwordHash = passwordHash;
     }
 
     public List<Integer> getFriends() {
@@ -69,7 +69,11 @@ public class User {
     }
 
     public void addFriend(Integer id) {
+        Integer myId = Main.getUserID(this);
+        if(myId == id) return;
+        if(this.friendIDs.contains(id)) return;
         this.friendIDs.add(id);
+        Main.users.get(id).addFriend(myId);
     }
 
     @Override
