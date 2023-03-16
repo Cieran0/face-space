@@ -15,11 +15,9 @@ public class Main {
     
     public static final Integer MAIN_WINDOW_WIDTH = 1280;
     public static final Integer MAIN_WINDOW_HEIGHT = 720;
-    public static final Integer POPUP_WINDOW_WIDTH = 300;
-    public static final Integer POPUP_WINDOW_HEIGHT = 400;
-    public static Screen menu = new WelcomePage();
-    public static JFrame f = new JFrame("DEBUG");//creating instance of JFrame  
-    public static JFrame popup = new JFrame("DEBUG");
+    public static JFrame mainWindow = new JFrame("DEBUG");//creating instance of JFrame  
+    public static Screen mainScreen = new WelcomePage();
+    public static JFrame popupWindow = new JFrame("DEBUG");
     public static Screen popupScreen;
     public static List<User> users = new ArrayList<User>(); 
     public static User currentUser = null;
@@ -44,36 +42,34 @@ public class Main {
         users.add(new User("micha","Baldie McBaldface", Hash.hash("help")));
         for (int i = 0, j =0; i < users.size();) {
             users.get(j).addFriend(i);
-            j++;
-            if(j == users.size()) {
+            if(++j >= users.size()) {
                 j=0;
                 i++;
             }
         }
-        setMainScreen(menu);
-        popup.setSize(POPUP_WINDOW_WIDTH,POPUP_WINDOW_HEIGHT);//300 width and 500 height  
-        popup.setLayout(null);//using no layout managers  
-        f.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT);//400 width and 500 height  
-        f.setLayout(null);//using no layout managers  
-        f.setVisible(true);//making the frame visible  
-        f.addWindowListener(wl);
+        setMainScreen(mainScreen); 
+        mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
+        mainWindow.setLayout(null);//using no layout managers  
+        popupWindow.setLayout(null);//using no layout managers  
+        mainWindow.setVisible(true);//making the frame visible  
+        mainWindow.addWindowListener(wl);
 
     }
 
     public static void setPopupScreen(Screen s) {
-        clearFrame(popup);
-        popup.setBounds(0, 0, s.getWidth(), s.getHeight());
-        popup.revalidate();
-        popup.repaint();
+        clearFrame(popupWindow);
+        popupWindow.setBounds(0, 0, s.getWidth(), s.getHeight());
+        popupWindow.revalidate();
+        popupWindow.repaint();
         popupScreen = s;
-        popupScreen.addComponents(popup);
-        popup.revalidate();
-        popup.repaint();
-        popup.setVisible(true);
+        popupScreen.addComponents(popupWindow);
+        popupWindow.revalidate();
+        popupWindow.repaint();
+        popupWindow.setVisible(true);
     }
     
     public static void hidePopup() {
-        popup.setVisible(false);
+        popupWindow.setVisible(false);
     }
 
     public static void clearFrame(JFrame frame) {
@@ -81,13 +77,13 @@ public class Main {
     }
 
     public static void setMainScreen(Screen s) {
-        clearFrame(f);
-        f.revalidate();
-        f.repaint();
-        menu = s;
-        menu.addComponents(f);
-        f.revalidate();
-        f.repaint();
+        clearFrame(mainWindow);
+        mainWindow.revalidate();
+        mainWindow.repaint();
+        mainScreen = s;
+        mainScreen.addComponents(mainWindow);
+        mainWindow.revalidate();
+        mainWindow.repaint();
     }
 
     public static void login(String username, String password) {
@@ -101,8 +97,10 @@ public class Main {
                 break;
             }
         }
-        if(!success)
+        if(!success) {
+            setPopupScreen(new AlertPopup(250, 100, "Invalid username/password"));            
             return;
+        }
         setMainScreen(new HomePage(currentUser));
     }
 
@@ -124,7 +122,7 @@ public class Main {
         try{
             FileWriter writer = new FileWriter("accounts.txt");
             for (User user : users) {
-                writer.write(user.getUsername() + "\n"+user.getFullName()+"\n" + user.getPasswordHash().toString() + "\n");
+                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n");
             }
             writer.close();
         }catch(IOException e){

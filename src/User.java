@@ -15,7 +15,7 @@ public class User {
 
     }
 
-    public User(String username, String fullName, Long passwordHash) {
+    public User(String fullName, String username, Long passwordHash) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.fullName = fullName;

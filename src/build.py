@@ -4,7 +4,7 @@ import os
 import sys
 
 def default():
-    os.system("make all >> build.log")
+    all()
 
     if(windows):
         os.system("del *.class >> build.log")
@@ -12,8 +12,12 @@ def default():
         os.system("rm *.class") 
 
 def run():
-    os.system("make default >> build.log")
-    os.system("java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -jar Main.jar")
+    default()
+    print("Makefile Done!")
+    if(windows):
+        os.system("java -jar Main.jar")
+    else:
+        os.system("java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -jar Main.jar")
 
 def all(): 
 	os.system("javac -d . *.java")
@@ -41,8 +45,10 @@ if(profile == "run"):
     run()
 elif(profile == "all"):
     all()
+    print("Makefile Done!")
 elif(profile == "clean"):
     clean()
+    print("Makefile Done!")
 else:
     default() 
-
+    print("Makefile Done!")
