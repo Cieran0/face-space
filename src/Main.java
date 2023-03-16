@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,9 +38,10 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        users.add(new User("cieran0","Cieran O'Neill", Hash.hash("password?")));
-        users.add(new User("benh99","Ben H", Hash.hash("penis")));
-        users.add(new User("micha","Baldie McBaldface", Hash.hash("help")));
+        //users.add(new User("cieran0","Cieran O'Neill", Hash.hash("password?")));
+        //users.add(new User("benh99","Ben H", Hash.hash("penis")));
+        //users.add(new User("micha","Baldie McBaldface", Hash.hash("help")));
+        readFile();
         for (int i = 0, j =0; i < users.size();) {
             users.get(j).addFriend(i);
             if(++j >= users.size()) {
@@ -132,13 +134,14 @@ public class Main {
 
     public static void readFile(){
         try{
-            File o = new File("accounts.txt");
-            Scanner scRead = new Scanner(o);
+            File f = new File("accounts.txt");
+            Scanner scRead = new Scanner(f);
             while(scRead.hasNextLine()){
                 Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine())));
             }
+            System.out.println(users.size());
             scRead.close();
-        }catch(FileNotFoundException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
