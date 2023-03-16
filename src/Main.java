@@ -19,7 +19,7 @@ public class Main {
     public static Screen mainScreen = new WelcomePage();
     public static JFrame popupWindow = new JFrame("DEBUG");
     public static Screen popupScreen;
-    public static List<User> users = new ArrayList<User>(); 
+    public static UserTree users = new UserTree();
     public static User currentUser = null;
 
     public static WindowListener wl = new WindowListener() {
@@ -37,16 +37,9 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        users.add(new User("cieran0","Cieran O'Neill", Hash.hash("password?")));
-        users.add(new User("benh99","Ben H", Hash.hash("penis")));
-        users.add(new User("micha","Baldie McBaldface", Hash.hash("help")));
-        for (int i = 0, j =0; i < users.size();) {
-            users.get(j).addFriend(i);
-            if(++j >= users.size()) {
-                j=0;
-                i++;
-            }
-        }
+        users.insertUser(new User("Ben H","benh99", Hash.hash("penis")));
+        users.insertUser(new User("Cieran O'Neill","cieran0", Hash.hash("password?")));
+        users.insertUser(new User("Baldie McBaldface","micha", Hash.hash("help")));
         setMainScreen(mainScreen); 
         mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
         mainWindow.setLayout(null);//using no layout managers  
@@ -90,7 +83,7 @@ public class Main {
         hidePopup();
         boolean success = false;
         long passwordHash = Hash.hash(password);
-        for (User user : users) {
+        for (User user : users.asList()) {
             if(user.getUsername().equals(username) && user.getPasswordHash() == passwordHash) {
                 success = true;
                 currentUser = user;
@@ -109,19 +102,14 @@ public class Main {
         currentUser = null;
     }
 
-    public static Integer getUserID(User user) {
-        for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).equals(user)) {
-                return i;
-            }
-        }
-        return -1;
+    public static Long getUserID(User user) {
+        return user.getId();
     }
 
-    public static void writeToFile(List<User> users){
+    public static void writeToFile(UserTree users){
         try{
             FileWriter writer = new FileWriter("accounts.txt");
-            for (User user : users) {
+            for (User user : users.asList()) {
                 writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n");
             }
             writer.close();
@@ -135,7 +123,7 @@ public class Main {
             File o = new File("accounts.txt");
             Scanner scRead = new Scanner(o);
             while(scRead.hasNextLine()){
-                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine())));
+                Main.users.insertUser(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine())));
             }
             scRead.close();
         }catch(FileNotFoundException e){

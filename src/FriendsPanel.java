@@ -13,24 +13,24 @@ public class FriendsPanel extends JPanel {
     public Color foregroundColour;
     public Color backgroundColour;
 
-    void reload(List<Integer> friendIDs) {
+    void reload(List<Long> friendIDs) {
         this.removeAll();
         JLabel yourFriendsLabel = new JLabel((isCurrentUser)? "Your Friends: " : "Their Friends: ");
         yourFriendsLabel.setBounds(50, 0, 200, 50);
         yourFriendsLabel.setForeground(foregroundColour);
         this.add(yourFriendsLabel);
         int i = 1;
-        for (Integer friendID : friendIDs) {
+        for (Long friendID : friendIDs) {
             JButton viewProfile = new JButton("View Profile");
             viewProfile.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    Main.setMainScreen(new HomePage(Main.users.get(friendID)));
+                    Main.setMainScreen(new HomePage(Main.users.searchTree(friendID)));
                 }
             }
             );
 
-            User friend = Main.users.get(friendID);
+            User friend = Main.users.searchTree(friendID);
             JLabel friendName = new JLabel(friend.getFullName());
             friendName.setBounds(50, i*50, 200, 25);
             viewProfile.setBounds(50, (i*50)+25, 200, 25);
@@ -43,7 +43,7 @@ public class FriendsPanel extends JPanel {
         this.repaint();
     }
 
-    FriendsPanel(boolean isCurrentUser, List<Integer> friendIDs, Color foregroundColour, Color backgroundColour){
+    FriendsPanel(boolean isCurrentUser, List<Long> friendIDs, Color foregroundColour, Color backgroundColour){
         super(null);
         this.isCurrentUser=isCurrentUser;
         this.foregroundColour=foregroundColour;
