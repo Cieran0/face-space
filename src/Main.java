@@ -122,7 +122,7 @@ public class Main {
         try{
             FileWriter writer = new FileWriter("accounts.txt");
             for (User user : users) {
-                writer.write(user.getUsername() + "\n"+user.getFullName()+"\n" + user.getPasswordHash().toString() + "\n");
+                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n");
             }
             writer.close();
         }catch(IOException e){
