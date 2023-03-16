@@ -27,15 +27,18 @@ public class DetailsPanel extends JPanel {
             details[i].setBounds(0, i*50, 200, 20);
             this.add(details[i]);
         }
-        JButton detailsButton = new JButton("Edit Details");
-        detailsButton.setBounds(100,210,100,50);
-        detailsButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Main.setPopupScreen(new EditDetailsPage());
+        if(profile.equals(Main.currentUser)){
+            JButton detailsButton = new JButton("Edit Details");
+            detailsButton.setBounds(100,210,100,50);
+            detailsButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.setPopupScreen(new EditDetailsPage());
+                }
             }
+            );
+            this.add(detailsButton);
         }
-        );
 
         JButton logout = new JButton("Logout");
         logout.setBounds(100, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
@@ -47,7 +50,6 @@ public class DetailsPanel extends JPanel {
         }
         );
         this.add(logout);
-        this.add(detailsButton);
         this.revalidate();
         this.repaint();
     }
