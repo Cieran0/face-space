@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
     private String username;
     private String fullName;
     private String workPlace;
@@ -17,6 +24,7 @@ public class User {
 
     public User(String username, String fullName, Long passwordHash) {
         this.username = username;
+        this.id = Hash.hash(username);
         this.passwordHash = passwordHash;
         this.fullName = fullName;
         this.homeTown = "Hidden";
