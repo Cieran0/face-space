@@ -10,6 +10,8 @@ public class DetailsPanel extends JPanel {
 
     public Color foregroundColour;
     public Color backgroundColour;
+
+    //public JButton detailsButton;
     
     public void reload(User profile) {
         this.removeAll();
@@ -25,6 +27,16 @@ public class DetailsPanel extends JPanel {
             details[i].setBounds(0, i*50, 200, 20);
             this.add(details[i]);
         }
+        JButton detailsButton = new JButton("Edit Details");
+        detailsButton.setBounds(100,210,100,50);
+        detailsButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Main.setPopupScreen(new EditDetailsPage());
+            }
+        }
+        );
+
         JButton logout = new JButton("Logout");
         logout.setBounds(100, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
         logout.addActionListener(new ActionListener(){
@@ -35,6 +47,7 @@ public class DetailsPanel extends JPanel {
         }
         );
         this.add(logout);
+        this.add(detailsButton);
         this.revalidate();
         this.repaint();
     }
