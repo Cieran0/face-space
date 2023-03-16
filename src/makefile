@@ -1,10 +1,10 @@
 default:
-	python3 build.py 
+	python build.py 
 run:
-	python3 build.py run
+	python build.py run
 
 all: 
-	python3 build.py all
+	python build.py all
 
 clean:
-	python3 build.py clean
+	python build.py cleanpy
