@@ -1,14 +1,10 @@
 default:
-	@make all >> /dev/null
-	@rm *.class
+	python3 build.py 
 run:
-	@make default >> /dev/null
-	@java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -jar Main.jar
+	python3 build.py run
 
 all: 
-	javac -d . *.java
-	jar cmvf MANIFEST.MF Main.jar *.class
+	python3 build.py all
 
 clean:
-	-rm *.jar
-	-rm *.class
+	python3 build.py clean
