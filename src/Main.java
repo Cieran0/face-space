@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,9 +38,7 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        users.insertUser(new User("Ben H","benh99", Hash.hash("penis")));
-        users.insertUser(new User("Cieran O'Neill","cieran0", Hash.hash("password?")));
-        users.insertUser(new User("Baldie McBaldface","micha", Hash.hash("help")));
+        readFile();
         setMainScreen(mainScreen); 
         mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
         mainWindow.setLayout(null);//using no layout managers  
@@ -120,13 +119,14 @@ public class Main {
 
     public static void readFile(){
         try{
-            File o = new File("accounts.txt");
-            Scanner scRead = new Scanner(o);
+            File f = new File("accounts.txt");
+            Scanner scRead = new Scanner(f);
             while(scRead.hasNextLine()){
                 Main.users.insertUser(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine())));
             }
+            System.out.println(users.size());
             scRead.close();
-        }catch(FileNotFoundException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

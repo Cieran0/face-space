@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 public class LoginPage implements Screen {
 
     public final Integer WIDTH = 300;
-    public final Integer HEIGHT = 300;
+    public final Integer HEIGHT = 400;
 
     JButton loginButton;
     JTextField usernameField;
