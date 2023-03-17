@@ -37,7 +37,7 @@ public class RegisterPage implements Screen {
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                Main.users.add(new User(fullNameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText())));
+                Main.users.insertUser(new User(fullNameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText())));
                 Main.login(usernameField.getText(), passwordField.getText());
             }
         });

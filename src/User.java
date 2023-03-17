@@ -16,7 +16,7 @@ public class User {
     private String workPlace;
     private String homeTown;
     private Long passwordHash;
-    private List<Integer> friendIDs;
+    private List<Long> friendIDs;
 
     public User() {
 
@@ -29,7 +29,7 @@ public class User {
         this.fullName = fullName;
         this.homeTown = "Hidden";
         this.workPlace = "Hidden";
-        this.friendIDs = new ArrayList<Integer>();
+        this.friendIDs = new ArrayList<Long>();
     }
 
     public String getUsername() {
@@ -72,16 +72,15 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public List<Integer> getFriends() {
+    public List<Long> getFriends() {
         return friendIDs;
     }
 
-    public void addFriend(Integer id) {
-        Integer myId = Main.getUserID(this);
-        if(myId == id) return;
+    public void addFriend(long id) {
+        if(this.id == id) return;
         if(this.friendIDs.contains(id)) return;
         this.friendIDs.add(id);
-        Main.users.get(id).addFriend(myId);
+        Main.users.searchTree(id).addFriend(this.id);
     }
 
     @Override
