@@ -20,6 +20,7 @@ public class EditDetailsPage implements Screen {
     JButton saveDetailsButton;
 
     public void addComponents(JFrame frame){
+        frame.setLocationRelativeTo(null);
         frame.add(fullNameLabel);
         frame.add(workPlaceLabel);
         frame.add(homeTownLabel);
