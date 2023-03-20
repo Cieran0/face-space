@@ -32,6 +32,7 @@ public class PostsPanel extends JPanel {
         final Integer POST_HEIGHT = 350;
         Stack<Post> filteredPosts = new Stack<Post>();
         for (Post post : Main.allPosts) {
+            System.out.println(post.getPosterId());
             if(selectedId == 0) {
                 if(post.getPosterId() == profile.getId()) {
                     filteredPosts.add(post);
@@ -39,6 +40,16 @@ public class PostsPanel extends JPanel {
             } else if(selectedId == 1) {
                 for (Long friendId : profile.getFriends()) {
                     if(post.getPosterId() == friendId) {
+                        filteredPosts.add(post);
+                    } 
+                }
+            } else if (selectedId == 2) {
+                if(post.mentions(profile)) {
+                    filteredPosts.add(post);
+                } 
+            } else if (selectedId == 3) {
+                for (Long friendId : profile.getFriends()) {
+                    if(post.mentions(Main.users.searchTree(friendId))) {
                         filteredPosts.add(post);
                     } 
                 }
@@ -51,7 +62,8 @@ public class PostsPanel extends JPanel {
 
         int i = 0;
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-        for (Post post : filteredPosts) {
+        while(!filteredPosts.isEmpty()) {
+            Post post = filteredPosts.pop();
             JLabel title = new JLabel("<html><span style='font-size:16px;'>"+post.getTitle()+"</span></html>",SwingConstants.CENTER);
             JTextArea content = new JTextArea(post.getContent());
             JLabel postedBy = new JLabel("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName());
@@ -79,12 +91,14 @@ public class PostsPanel extends JPanel {
         scrollBar.setBounds(660, 0, 20, Main.MAIN_WINDOW_HEIGHT-50);
         posts.add(scrollBar);
 
-        String[] choices = new String[]{
-            (profile.isCurrentUser()? 
-                ("Your ") : (profile.getFullName() + "'s "))
-            + "Posts",
-            "Friends' Posts", "Mentions You", "Mentions a friend"
-        };
+        String[] choices = profile.isCurrentUser()? 
+            new String[]{
+                "Your posts", "Your friends' posts", "Mentions you", "Mentions your friend" 
+            } : 
+            new String[]{
+                "Their posts", "Their friends' posts", "Mentions them", "Mentions their friend"
+            }
+        ;
         JComboBox<String> postsFilter = new JComboBox<String>(choices);
         postsFilter.setSelectedIndex(selectedId);
         postsFilter.addActionListener(new ActionListener() {

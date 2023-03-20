@@ -40,5 +40,7 @@ public class Post {
         this.posterId = posterId;
     }
 
-
+    public boolean mentions(User user) {
+        return this.content.contains("@"+user.getUsername());
+    }
 }
