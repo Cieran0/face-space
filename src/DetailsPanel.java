@@ -38,10 +38,21 @@ public class DetailsPanel extends JPanel {
             }
             );
             this.add(detailsButton);
+
+            JButton newPostButton = new JButton("New Post");
+            newPostButton.setBounds(50, Main.MAIN_WINDOW_HEIGHT-100, 75, 50);
+            newPostButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.setPopupScreen(new NewPostPopup());
+                }
+            }
+            );
+            this.add(newPostButton);
         }
 
         JButton logout = new JButton("Logout");
-        logout.setBounds(100, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
+        logout.setBounds(150, Main.MAIN_WINDOW_HEIGHT-100, 75, 50);
         logout.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0) {

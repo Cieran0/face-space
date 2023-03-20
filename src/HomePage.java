@@ -1,25 +1,14 @@
 import java.awt.Color;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 
 public class HomePage implements Screen{
 
     private boolean isCurrentUser;
     private User profile;
-    private JPanel friendsPanel;
-    private JPanel detailsPanel;
-    private JPanel postsPanel;
+    private FriendsPanel friendsPanel;
+    private DetailsPanel detailsPanel;
+    private PostsPanel postsPanel;
     
     public HomePage(User profile) {
         this.isCurrentUser = profile.equals(Main.currentUser);
@@ -50,6 +39,13 @@ public class HomePage implements Screen{
         frame.add(friendsPanel);
         frame.add(detailsPanel);
         frame.add(postsPanel);
+    }
+
+    public void reloadPosts() {
+        this.postsPanel = new PostsPanel(profile, Color.WHITE,Color.LIGHT_GRAY);
+        this.postsPanel.setBounds(300,0,680,Main.MAIN_WINDOW_HEIGHT);
+        this.postsPanel.reloadPosts(profile, 0,0);
+        Main.setMainScreen(this);
     }
 
 }

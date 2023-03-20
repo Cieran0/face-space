@@ -32,7 +32,6 @@ public class PostsPanel extends JPanel {
         final Integer POST_HEIGHT = 350;
         Stack<Post> filteredPosts = new Stack<Post>();
         for (Post post : Main.allPosts) {
-            System.out.println(post.getPosterId());
             if(selectedId == 0) {
                 if(post.getPosterId() == profile.getId()) {
                     filteredPosts.add(post);
