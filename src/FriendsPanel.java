@@ -1,5 +1,5 @@
 import java.util.List;
-
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -13,7 +13,7 @@ public class FriendsPanel extends JPanel {
     public Color foregroundColour;
     public Color backgroundColour;
 
-    void reload(List<Long> friendIDs) {
+    void reload(Set<Long> friendIDs) {
         this.removeAll();
         JLabel yourFriendsLabel = new JLabel((isCurrentUser)? "Your Friends: " : "Their Friends: ");
         yourFriendsLabel.setBounds(50, 0, 200, 50);
@@ -43,7 +43,7 @@ public class FriendsPanel extends JPanel {
         this.repaint();
     }
 
-    FriendsPanel(boolean isCurrentUser, List<Long> friendIDs, Color foregroundColour, Color backgroundColour){
+    FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs, Color foregroundColour, Color backgroundColour){
         super(null);
         this.isCurrentUser=isCurrentUser;
         this.foregroundColour=foregroundColour;
