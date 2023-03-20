@@ -15,6 +15,16 @@ public class FriendsPanel extends JPanel {
 
     void reload(Set<Long> friendIDs) {
         this.removeAll();
+
+        JButton searchButton = new JButton("Search");
+        searchButton.setBounds(50,0,100,50);
+        searchButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                Main.setPopupScreen(new SearchPage());
+            }
+        });
+
         JLabel yourFriendsLabel = new JLabel((isCurrentUser)? "Your Friends: " : "Their Friends: ");
         yourFriendsLabel.setBounds(50, 0, 200, 50);
         yourFriendsLabel.setForeground(foregroundColour);
@@ -32,8 +42,8 @@ public class FriendsPanel extends JPanel {
 
             User friend = Main.users.searchTree(friendID);
             JLabel friendName = new JLabel(friend.getFullName());
-            friendName.setBounds(50, i*50, 200, 25);
-            viewProfile.setBounds(50, (i*50)+25, 200, 25);
+            friendName.setBounds(50, (i*50)+100, 200, 25);
+            viewProfile.setBounds(50, (i*50)+125, 200, 25);
             this.add(friendName);
             this.add(viewProfile);
             friendName.setForeground(foregroundColour);
