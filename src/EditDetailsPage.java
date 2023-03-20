@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 
 public class EditDetailsPage implements Screen {
     public final Integer WIDTH = 300;
-    public final Integer HEIGHT = 450;
+    public final Integer HEIGHT = 550;
 
     JLabel fullNameLabel;
     JLabel workPlaceLabel;
@@ -42,6 +42,11 @@ public class EditDetailsPage implements Screen {
 
                 if(!passwordField.getText().isBlank()){
                     Main.currentUser.setPasswordHash(Hash.hash(passwordField.getText()));
+                }
+                for(User user : Main.users.asList()){
+                    if(user.getUsername().equals(Main.currentUser.getUsername())){
+                        user = Main.currentUser;
+                    }
                 }
                 Main.hidePopup();
                 Main.setMainScreen(new HomePage(Main.currentUser));

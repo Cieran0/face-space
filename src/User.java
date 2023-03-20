@@ -24,13 +24,13 @@ public class User {
 
     }
 
-    public User(String fullName, String username, Long passwordHash) {
+    public User(String fullName, String username, Long passwordHash, String workPlace, String homeTown) {
         this.username = username;
         this.id = Hash.hash(username);
         this.passwordHash = passwordHash;
         this.fullName = fullName;
-        this.homeTown = "Hidden";
-        this.workPlace = "Hidden";
+        this.homeTown = homeTown;
+        this.workPlace = workPlace;
         this.friendIDs = new HashSet<Long>();
     }
 
