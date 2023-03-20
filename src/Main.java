@@ -124,7 +124,7 @@ public class Main {
         try{
             FileWriter writer = new FileWriter("accounts.txt");
             for (User user : users) {
-                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n");
+                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n" + user.getWorkPlace() + "\n"+user.getHomeTown() +"\n" );
             }
             writer.close();
         }catch(IOException e){
@@ -137,7 +137,7 @@ public class Main {
             File f = new File("accounts.txt");
             Scanner scRead = new Scanner(f);
             while(scRead.hasNextLine()){
-                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine())));
+                Main.users.add(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine()),scRead.nextLine(),scRead.nextLine()));
             }
             System.out.println(users.size());
             scRead.close();
