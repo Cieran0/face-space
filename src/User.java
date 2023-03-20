@@ -31,7 +31,7 @@ public class User {
         this.fullName = fullName;
         this.homeTown = homeTown;
         this.workPlace = workPlace;
-        this.friendIDs = new HashSet<Integer>();
+        this.friendIDs = new HashSet<Long>();
     }
 
     public String getUsername() {

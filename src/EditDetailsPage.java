@@ -43,7 +43,7 @@ public class EditDetailsPage implements Screen {
                 if(!passwordField.getText().isBlank()){
                     Main.currentUser.setPasswordHash(Hash.hash(passwordField.getText()));
                 }
-                for(User user : Main.users){
+                for(User user : Main.users.asList()){
                     if(user.getUsername().equals(Main.currentUser.getUsername())){
                         user = Main.currentUser;
                     }
