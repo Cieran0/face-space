@@ -39,6 +39,12 @@ if(platform.system() != "Linux"):
     windows = True
 
 profile = "default"
+
+if(windows):
+    os.system("del *.jar")
+else:
+    os.system("rm *.jar") 
+
 if(len(sys.argv) > 1):
     profile = sys.argv[1]
 if(profile == "run"):
