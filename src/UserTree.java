@@ -63,7 +63,6 @@ public class UserTree {
         Node head = root;
 
         while(head.id != id){
-            System.out.println(head.id);
             if (head != null){
                 if (head.id > id){
                     head = head.left;

@@ -2,7 +2,16 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 
 public class HomePage implements Screen{
 
@@ -10,6 +19,7 @@ public class HomePage implements Screen{
     private User profile;
     private JPanel friendsPanel;
     private JPanel detailsPanel;
+    private JPanel postsPanel;
     
     public HomePage(User profile) {
         this.isCurrentUser = profile.equals(Main.currentUser);
@@ -20,6 +30,9 @@ public class HomePage implements Screen{
 
         this.detailsPanel = new DetailsPanel(profile,Color.WHITE,Color.DARK_GRAY);
         this.detailsPanel.setBounds(0, 0, 300, Main.MAIN_WINDOW_HEIGHT);
+
+        this.postsPanel = new PostsPanel(profile, Color.WHITE,Color.LIGHT_GRAY);
+        this.postsPanel.setBounds(300,0,680,Main.MAIN_WINDOW_HEIGHT);
     }
 
     @Override
@@ -36,6 +49,7 @@ public class HomePage implements Screen{
     public void addComponents(JFrame frame) {
         frame.add(friendsPanel);
         frame.add(detailsPanel);
+        frame.add(postsPanel);
     }
 
 }

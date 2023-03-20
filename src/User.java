@@ -92,4 +92,8 @@ public class User {
         return otherUser.username == this.username;
     }
     
+    public boolean isCurrentUser() {
+        return this.equals(Main.currentUser);
+    }
+
 }
