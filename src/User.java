@@ -1,7 +1,9 @@
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class User {
 
@@ -16,7 +18,7 @@ public class User {
     private String workPlace;
     private String homeTown;
     private Long passwordHash;
-    private List<Long> friendIDs;
+    private Set<Long> friendIDs;
 
     public User() {
 
@@ -29,7 +31,7 @@ public class User {
         this.fullName = fullName;
         this.homeTown = "Hidden";
         this.workPlace = "Hidden";
-        this.friendIDs = new ArrayList<Long>();
+        this.friendIDs = new HashSet<Long>();
     }
 
     public String getUsername() {
@@ -72,7 +74,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public List<Long> getFriends() {
+    public Set<Long> getFriends() {
         return friendIDs;
     }
 
