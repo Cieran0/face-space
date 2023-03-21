@@ -96,6 +96,8 @@ public class User {
         Set<Long> recommendedFriends = new HashSet<Long>();
         List<User> listOfUsers = Main.users.asList();
         for (User user : listOfUsers) {
+            if (user.equals(this)) continue;
+            if (this.friendIDs.contains(user.id)) continue;
             if (user.workPlace.equals(this.workPlace)){
                 recommendedFriends.add(user.id);
             }
