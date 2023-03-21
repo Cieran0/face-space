@@ -22,6 +22,7 @@ public class RegisterPage implements Screen {
     JLabel confirmPasswordLabel;
 
     public void addComponents(JFrame frame) {
+        frame.setLocationRelativeTo(null);
         frame.add(registerButton);
         frame.add(fullNameLabel);
         frame.add(fullNameField);

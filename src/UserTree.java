@@ -63,7 +63,7 @@ public class UserTree {
         Node head = root;
 
         while(head.id != id){
-            System.out.println(head.id);
+            //System.out.println(head.id);
             if (head != null){
                 if (head.id > id){
                     head = head.left;
@@ -90,7 +90,7 @@ public class UserTree {
             return;
         }
         print(root.left);
-        System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
+        //System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
         print(root.right);
     }
 
