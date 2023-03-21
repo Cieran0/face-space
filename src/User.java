@@ -82,7 +82,9 @@ public class User {
         if(this.id == id) return;
         if(this.friendIDs.contains(id)) return;
         this.friendIDs.add(id);
-        Main.users.searchTree(id).addFriend(this.id);
+        User friend = Main.users.searchTree(id);
+        if(friend != null)
+            friend.addFriend(this.id);
     }
 
     @Override
@@ -90,6 +92,31 @@ public class User {
         if(!(obj instanceof User)) return false;
         User otherUser = (User)obj;
         return otherUser.username == this.username;
+    }
+
+    public Set<Long> recommendFriends(){
+        Set<Long> recommendedFriends = new HashSet<Long>();
+        List<User> listOfUsers = Main.users.asList();
+        for (User user : listOfUsers) {
+            if (user.equals(this)) continue;
+            if (this.friendIDs.contains(user.id)) continue;
+            if (user.workPlace.equals(this.workPlace)){
+                recommendedFriends.add(user.id);
+            }
+            else if (user.homeTown.equals(this.homeTown)) {
+                recommendedFriends.add(user.id);
+            }
+            else {
+                for (Long friendID : this.friendIDs){
+                    User userFriend = Main.users.searchTree(friendID);
+
+                    if (userFriend.getFriends().contains(user.id)){
+                        recommendedFriends.add(user.id);
+                    }
+                }
+            }
+        }
+        return recommendedFriends;
     }
     
     public boolean isCurrentUser() {
