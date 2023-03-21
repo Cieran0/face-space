@@ -58,9 +58,9 @@ public class PostsPanel extends JPanel {
             }
         }
         int postsCount = filteredPosts.size();
-        int totalHeight = postsCount*POST_HEIGHT - (Main.MAIN_WINDOW_HEIGHT-50);
-        int scrollInterval = totalHeight/100;
-        int yOffset = (totalHeight+50 > Main.MAIN_WINDOW_HEIGHT)? scrollInterval*scrollValue : 0;
+        int totalHeight = postsCount*POST_HEIGHT + 50;
+        int scrollInterval = (totalHeight - (Main.MAIN_WINDOW_HEIGHT));
+        int yOffset = (scrollInterval > 0)? (scrollInterval*scrollValue)/100 : 0;
 
         int i = 0;
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);

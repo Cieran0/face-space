@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 public class NewPostPopup implements Screen {
 
@@ -66,7 +68,7 @@ public class NewPostPopup implements Screen {
                 String titleString = titleField.getText();
                 String contentString = content.getText();
                 if(titleString.isEmpty() || contentString.isEmpty()) {
-                    System.out.println("Handle this error: title or content is empty");
+                    showMessageDialog(null,"Title or content is empty!");
                     return;
                 }
                 Main.allPosts.add(new Post(Main.currentUser.getId(), titleString, contentString));
