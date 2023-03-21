@@ -14,6 +14,7 @@ def default():
 def run():
     default()
     print("Makefile Done!")
+    os.chdir("../")
     if(windows):
         os.system("java -jar Main.jar")
     else:
@@ -21,15 +22,15 @@ def run():
 
 def all(): 
 	os.system("javac -d . *.java")
-	os.system("jar cmvf MANIFEST.MF Main.jar *.class")
+	os.system("jar cmvf MANIFEST.MF ../Main.jar *.class")
 
 def clean():
 
     if(windows):
-        os.system("del *.jar")
+        os.system("del ../*.jar")
         os.system("del *.class")
     else:
-        os.system("rm *.jar")
+        os.system("rm ../*.jar")
         os.system("rm *.class")
 
 
@@ -41,9 +42,9 @@ if(platform.system() != "Linux"):
 profile = "default"
 
 if(windows):
-    os.system("del *.jar")
+    os.system("del ..\*.jar")
 else:
-    os.system("rm *.jar") 
+    os.system("rm ../*.jar") 
 
 if(len(sys.argv) > 1):
     profile = sys.argv[1]
