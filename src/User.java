@@ -91,6 +91,29 @@ public class User {
         User otherUser = (User)obj;
         return otherUser.username == this.username;
     }
+
+    public Set<Long> recommendFriends(){
+        Set<Long> recommendedFriends = new HashSet<Long>();
+        List<User> listOfUsers = Main.users.asList();
+        for (User user : listOfUsers) {
+            if (user.workPlace.equals(this.workPlace)){
+                recommendedFriends.add(user.id);
+            }
+            else if (user.homeTown.equals(this.homeTown)) {
+                recommendedFriends.add(user.id);
+            }
+            else {
+                for (Long friendID : this.friendIDs){
+                    User userFriend = Main.users.searchTree(friendID);
+
+                    if (userFriend.getFriends().contains(user.id)){
+                        recommendedFriends.add(user.id);
+                    }
+                }
+            }
+        }
+        return recommendedFriends;
+    }
     
     public boolean isCurrentUser() {
         return this.equals(Main.currentUser);
