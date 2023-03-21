@@ -46,9 +46,10 @@ public class DetailsPanel extends JPanel {
             addFriendButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent arg0){
-                    
+                    Main.currentUser.addFriend(profile.getId());
                 }
             });
+            this.add(addFriendButton);
         }
 
         JButton logout = new JButton("Logout");
