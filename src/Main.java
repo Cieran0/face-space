@@ -124,7 +124,8 @@ public class Main {
             for (User user : users.asList()) {
                 noFriends = user.getFriends().size();
                 writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n" + user.getWorkPlace() + "\n"+user.getHomeTown() +"\n" + noFriends + "\n");
-                Long[] friends = user.getFriends().toArray(Long[]::new);
+                //Long[] friends = user.getFriends().toArray(Long[]::new);
+                Long[] friends = user.getFriends().toArray(new Long[user.getFriends().size()]);
                 for(int i = 0; i< noFriends; i++){
                     writer.write(friends[i] + "\n");
                 }
