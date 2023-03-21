@@ -31,22 +31,25 @@ public class PostsPanel extends JPanel {
         posts.add(scrollBar);
         final Integer POST_HEIGHT = 350;
         Stack<Post> filteredPosts = new Stack<Post>();
+        if(!profile.isCurrentUser()) {
+            selectedId++;
+        }
         for (Post post : Main.allPosts) {
-            if(selectedId == 0) {
+            if(selectedId == 1 || selectedId == 0) {
                 if(post.getPosterId() == profile.getId()) {
                     filteredPosts.add(post);
                 } 
-            } else if(selectedId == 1) {
+            } else if(selectedId == 2 || selectedId == 0) {
                 for (Long friendId : profile.getFriends()) {
                     if(post.getPosterId() == friendId) {
                         filteredPosts.add(post);
                     } 
                 }
-            } else if (selectedId == 2) {
+            } else if (selectedId == 3 || selectedId == 0) {
                 if(post.mentions(profile)) {
                     filteredPosts.add(post);
                 } 
-            } else if (selectedId == 3) {
+            } else if (selectedId == 4 || selectedId == 0) {
                 for (Long friendId : profile.getFriends()) {
                     if(post.mentions(Main.users.searchTree(friendId))) {
                         filteredPosts.add(post);
@@ -92,7 +95,7 @@ public class PostsPanel extends JPanel {
 
         String[] choices = profile.isCurrentUser()? 
             new String[]{
-                "Your posts", "Your friends' posts", "Mentions you", "Mentions your friend" 
+                "Feed","Your posts", "Your friends' posts", "Mentions you", "Mentions your friend" 
             } : 
             new String[]{
                 "Their posts", "Their friends' posts", "Mentions them", "Mentions their friend"

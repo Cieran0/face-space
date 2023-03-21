@@ -118,6 +118,7 @@ public class FriendsPanel extends JPanel {
             }
             this.add(reccomendedFriendsLabel);
         }
+        this.add(friendsListButton);
         this.revalidate();
         this.repaint();
     }
