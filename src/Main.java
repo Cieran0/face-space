@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
     
@@ -100,7 +101,8 @@ public class Main {
             }
         }
         if(!success) {
-            setPopupScreen(new AlertPopup(250, 100, "Invalid username/password"));            
+            hidePopup();            
+            showMessageDialog(null, "Invalid Username/Password!");
             return;
         }
         setMainScreen(new HomePage(currentUser));
@@ -116,10 +118,16 @@ public class Main {
     }
 
     public static void writeToFile(UserTree users){
+        int noFriends = 0;
         try{
             FileWriter writer = new FileWriter("accounts.txt");
             for (User user : users.asList()) {
-                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n" + user.getWorkPlace() + "\n"+user.getHomeTown() +"\n" );
+                noFriends = user.getFriends().size();
+                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n" + user.getWorkPlace() + "\n"+user.getHomeTown() +"\n" + noFriends + "\n");
+                Long[] friends = user.getFriends().toArray(Long[]::new);
+                for(int i = 0; i< noFriends; i++){
+                    writer.write(friends[i] + "\n");
+                }
             }
             writer.close();
         }catch(IOException e){
@@ -128,11 +136,19 @@ public class Main {
     }
 
     public static void readFile(){
+        int noFriends = 0;
         try{
             File f = new File("accounts.txt");
             Scanner scRead = new Scanner(f);
             while(scRead.hasNextLine()){
-                Main.users.insertUser(new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine()),scRead.nextLine(),scRead.nextLine()));
+                User newUser = new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine()),scRead.nextLine(),scRead.nextLine());
+                Main.users.insertUser(newUser);
+                noFriends = scRead.nextInt();
+                scRead.nextLine();
+                for(int i = 0; i<noFriends; i++){
+                    newUser.addFriend(scRead.nextLong());
+                    scRead.nextLine();
+                }
             }
             scRead.close();
         }catch(Exception e){
