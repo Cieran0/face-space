@@ -47,6 +47,7 @@ public class DetailsPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent arg0){
                     Main.currentUser.addFriend(profile.getId());
+                    Main.setMainScreen(new HomePage(profile));
                 }
             });
             this.add(addFriendButton);
