@@ -6,8 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class SearchPage implements Screen{
-    public final Integer WIDTH = 400;
-    public final Integer HEIGHT = 300;
+    public final Integer WIDTH = 300;
+    public final Integer HEIGHT = 310;
 
     JLabel searchLabel;
     JTextField searchField;
@@ -17,10 +17,34 @@ public class SearchPage implements Screen{
         frame.setLocationRelativeTo(null);
         frame.add(searchLabel);
         frame.add(searchField);
+        frame.add(searchButton);
     }
 
     public SearchPage(){
         searchButton = new JButton("Search");
+        searchButton.setBounds(50,100,200,50);
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                User searchedUser;
+
+                searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
+
+                for(User user : Main.users.asList()){
+                    if(searchedUser.equals(null)){
+                        return;
+                    }
+                    else if(searchedUser.getFullName().equals(user.getFullName())){
+                        Main.hidePopup();
+                        Main.setMainScreen(new HomePage(searchedUser));
+                    }
+                    else if(searchedUser.getUsername().equals(user.getUsername())){
+                        Main.hidePopup();
+                        Main.setMainScreen(new HomePage(searchedUser));
+                    }
+                }
+            }
+        });
 
         searchLabel = new JLabel("<html><span style='font-size:32px;'>Search</span></html>");
         searchLabel.setBounds(50,0,200,50);

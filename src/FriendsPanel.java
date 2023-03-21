@@ -17,16 +17,17 @@ public class FriendsPanel extends JPanel {
         this.removeAll();
 
         JButton searchButton = new JButton("Search");
-        searchButton.setBounds(50,0,100,50);
+        searchButton.setBounds(50,20,100,50);
         searchButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent arg0){
                 Main.setPopupScreen(new SearchPage());
             }
         });
+        this.add(searchButton);
 
         JLabel yourFriendsLabel = new JLabel((isCurrentUser)? "Your Friends: " : "Their Friends: ");
-        yourFriendsLabel.setBounds(50, 0, 200, 50);
+        yourFriendsLabel.setBounds(50, 100 , 200, 50);
         yourFriendsLabel.setForeground(foregroundColour);
         this.add(yourFriendsLabel);
         int i = 1;
