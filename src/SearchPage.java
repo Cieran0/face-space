@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTextField;
 
 public class SearchPage implements Screen{
@@ -29,12 +30,13 @@ public class SearchPage implements Screen{
                 User searchedUser;
 
                 searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
+                if(searchedUser == null) {
+                    showMessageDialog(null, "User not found");
+                    return;
+                }
 
                 for(User user : Main.users.asList()){
-                    if(searchedUser.equals(null)){
-                        return;
-                    }
-                    else if(searchedUser.getFullName().equals(user.getFullName())){
+                    if(searchedUser.getFullName().equals(user.getFullName())){
                         Main.hidePopup();
                         Main.setMainScreen(new HomePage(searchedUser));
                     }
