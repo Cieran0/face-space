@@ -40,7 +40,7 @@ public class DetailsPanel extends JPanel {
             this.add(detailsButton);
         }
 
-        else if(!profile.equals(Main.currentUser)){
+        else if(!profile.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(profile.getId())){
             JButton addFriendButton = new JButton("Add Friend");
             addFriendButton.setBounds(100,210,100,50);
             addFriendButton.addActionListener(new ActionListener(){
