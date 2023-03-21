@@ -49,10 +49,6 @@ public class Main {
                 user.addFriend(friend.getId());
             }
         }
-        for (int i = 0; i < 10; i++) {
-            allPosts.add(new Post(Hash.hash("cieran0"), "test", "tets"));
-        }
-        allPosts.add(new Post(Hash.hash("benh99"), "Tetsing", "Hey @cieran0 this is a test!"));
         setMainScreen(mainScreen); 
         mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
         mainWindow.setLayout(null);//using no layout managers  
