@@ -89,7 +89,7 @@ public class UserTree {
             return;
         }
         print(root.left);
-        System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
+        //System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
         print(root.right);
     }
 

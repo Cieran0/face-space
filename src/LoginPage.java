@@ -20,6 +20,7 @@ public class LoginPage implements Screen {
     JLabel passwordLabel;
 
     public void addComponents(JFrame frame) {
+        frame.setLocationRelativeTo(null);
         frame.add(loginButton);
         frame.add(usernameField);
         frame.add(passwordField);

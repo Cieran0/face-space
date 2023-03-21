@@ -51,6 +51,19 @@ public class DetailsPanel extends JPanel {
             this.add(newPostButton);
         }
 
+        else if(!profile.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(profile.getId())){
+            JButton addFriendButton = new JButton("Add Friend");
+            addFriendButton.setBounds(100,210,100,50);
+            addFriendButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent arg0){
+                    Main.currentUser.addFriend(profile.getId());
+                    Main.setMainScreen(new HomePage(profile));
+                }
+            });
+            this.add(addFriendButton);
+        }
+
         JButton logout = new JButton("Logout");
         logout.setBounds(150, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
         logout.addActionListener(new ActionListener(){

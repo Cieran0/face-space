@@ -44,11 +44,11 @@ public class Main {
 
     public static void main(String[] args) {
         readFile();
-        for (User user : users.asList()) {
-            for (User friend : users.asList()) {
-                user.addFriend(friend.getId());
-            }
-        }
+//        for (User user : users.asList()) {
+//            for (User friend : users.asList()) {
+//                user.addFriend(friend.getId());
+//            }
+//        }
         setMainScreen(mainScreen); 
         mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
         mainWindow.setLayout(null);//using no layout managers  
