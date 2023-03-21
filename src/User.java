@@ -82,7 +82,9 @@ public class User {
         if(this.id == id) return;
         if(this.friendIDs.contains(id)) return;
         this.friendIDs.add(id);
-        Main.users.searchTree(id).addFriend(this.id);
+        User friend = Main.users.searchTree(id);
+        if(friend != null)
+            friend.addFriend(this.id);
     }
 
     @Override

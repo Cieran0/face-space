@@ -32,6 +32,9 @@ public class FriendsPanel extends JPanel {
         this.add(yourFriendsLabel);
         int i = 1;
         for (Long friendID : friendIDs) {
+            if(i > 3){
+                break;
+            }
             User currentFriend = Main.users.searchTree(friendID);
             JButton viewProfile = new JButton("View Profile");
                 viewProfile.addActionListener(new ActionListener(){
@@ -41,7 +44,6 @@ public class FriendsPanel extends JPanel {
                     }
                 }
                 );
-
             if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(friendID)){
                 viewProfile.setBounds(50,(i*50)+125,125,25);
                 JButton addFriendButton = new JButton("Add");
@@ -67,6 +69,16 @@ public class FriendsPanel extends JPanel {
                 friendName.setForeground(foregroundColour);
                 i++;
         }
+
+        JButton friendsListButton = new JButton("All Friends");
+        friendsListButton.setBounds(50,300,200,50);
+        friendsListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                Main.setPopupScreen(new FriendsListPage());
+            }
+        });
+
         this.revalidate();
         this.repaint();
     }
