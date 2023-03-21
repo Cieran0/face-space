@@ -6,7 +6,6 @@ public class Hash {
         for (int c : stringToHash.toCharArray()) {
             hashValue *= (c) + stringToHash.charAt((int)((((double)c)/255f) * ((double)stringToHash.length())));
         }
-        System.out.println(hashValue);
         return hashValue;
     }
 

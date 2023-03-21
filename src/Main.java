@@ -8,8 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import javax.swing.*;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -22,6 +26,7 @@ public class Main {
     public static Screen popupScreen;
     public static UserTree users = new UserTree();
     public static User currentUser = null;
+    public static Queue<Post> allPosts = new LinkedList<Post>();
 
     public static WindowListener wl = new WindowListener() {
         public void windowClosing(WindowEvent arg0) {
