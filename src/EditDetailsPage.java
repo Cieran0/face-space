@@ -41,7 +41,7 @@ public class EditDetailsPage implements Screen {
                 Main.currentUser.setHomeTown(homeTownField.getText());
                 Main.currentUser.setWorkPlace(workPlaceField.getText());
 
-                if(!passwordField.getText().isBlank()){
+                if(passwordField.getText().length() != 0){
                     Main.currentUser.setPasswordHash(Hash.hash(passwordField.getText()));
                 }
                 for(User user : Main.users.asList()){
