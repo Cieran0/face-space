@@ -1,12 +1,15 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import javax.swing.*;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
@@ -24,6 +27,7 @@ public class Main {
     public static WindowListener wl = new WindowListener() {
         public void windowClosing(WindowEvent arg0) {
             writeToFile(users);
+            writePostsToFile(allPosts);
             System.exit(0);
         }
 
@@ -36,6 +40,7 @@ public class Main {
     };
 
     public static void main(String[] args) {
+        readInPosts();
         readFile();
 //        for (User user : users.asList()) {
 //            for (User friend : users.asList()) {
@@ -145,6 +150,41 @@ public class Main {
             }
             scRead.close();
         }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void writePostsToFile(Queue<Post> allPosts) {
+        try{
+            FileWriter writer = new FileWriter("posts.txt");
+            Integer numberOfPosts = allPosts.size();
+            writer.write(numberOfPosts.toString() + '\n');
+            for (Post post : allPosts) {
+                writer.write(post.toString());
+            }
+            writer.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void readInPosts() {
+        Scanner scan;
+        //TODO: make likes be read in and wrote out!
+        try {
+            scan = new Scanner(new File("posts.txt"));
+            int count = scan.nextInt();
+            scan.useDelimiter("\3");
+            scan.nextLine();
+            while (count >= 1) {
+                Long posterId = Long.parseLong(scan.nextLine());
+                String title = scan.nextLine();
+                String content = scan.next();
+                allPosts.add(new Post(posterId, title, content));
+                count--;
+            }
+            scan.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

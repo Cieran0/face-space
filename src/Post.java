@@ -77,4 +77,11 @@ public class Post {
     public Integer getLikeCount() {
         return this.likedBy.size();
     }
+
+    @Override
+    public String toString() {
+        String header = this.posterId.toString() + '\n' + this.title + '\n';
+        header += this.content + '\3';
+        return header;
+    }
 }
