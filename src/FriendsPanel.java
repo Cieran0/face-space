@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,7 +91,7 @@ public class FriendsPanel extends JPanel {
                 .actionListener(new ActionListener()
                 {
                     public void actionPerformed(ActionEvent arg0) {
-                        Main.setMainScreen(new HomePage(Main.users.searchTree(friendID)));
+                        Main.setMainScreen(new HomePage(currentFriend));
                     }
                 }
                 );

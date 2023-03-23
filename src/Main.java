@@ -1,18 +1,10 @@
-
-import java.awt.Component;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javax.swing.*;
-import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 import static javax.swing.JOptionPane.showMessageDialog;
