@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -12,7 +11,7 @@ public class SearchPage implements Screen{
 
     JLabel searchLabel;
     JTextField searchField;
-    JButton searchButton;
+    Button searchButton;
 
     public void addComponents(JFrame frame){
         frame.setLocationRelativeTo(null);
@@ -22,31 +21,32 @@ public class SearchPage implements Screen{
     }
 
     public SearchPage(){
-        searchButton = new JButton("Search");
-        searchButton.setBounds(50,100,200,50);
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0){
-                User searchedUser;
+        searchButton = new Button("Search")
+        .bounds(50,100,200,50)
+        .actionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent arg0){
+                    User searchedUser;
 
-                searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
-                if(searchedUser == null) {
-                    showMessageDialog(null, "User not found");
-                    return;
-                }
-
-                for(User user : Main.users.asList()){
-                    if(searchedUser.getFullName().equals(user.getFullName())){
-                        Main.hidePopup();
-                        Main.setMainScreen(new HomePage(searchedUser));
+                    searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
+                    if(searchedUser == null) {
+                        showMessageDialog(null, "User not found");
+                        return;
                     }
-                    else if(searchedUser.getUsername().equals(user.getUsername())){
-                        Main.hidePopup();
-                        Main.setMainScreen(new HomePage(searchedUser));
+
+                    for(User user : Main.users.asList()){
+                        if(searchedUser.getFullName().equals(user.getFullName())){
+                            Main.hidePopup();
+                            Main.setMainScreen(new HomePage(searchedUser));
+                        }
+                        else if(searchedUser.getUsername().equals(user.getUsername())){
+                            Main.hidePopup();
+                            Main.setMainScreen(new HomePage(searchedUser));
+                        }
                     }
                 }
             }
-        });
+        );
 
         searchLabel = new JLabel("<html><span style='font-size:32px;'>Search</span></html>");
         searchLabel.setBounds(50,0,200,50);

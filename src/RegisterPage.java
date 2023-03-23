@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -11,7 +10,7 @@ public class RegisterPage implements Screen {
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 550;
 
-    JButton registerButton;
+    Button registerButton;
     JTextField fullNameField;
     JTextField usernameField;
     JTextField passwordField;
@@ -35,13 +34,17 @@ public class RegisterPage implements Screen {
     }
     
     public RegisterPage() {
-        registerButton = new JButton("Register");
-        registerButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
-                Main.users.insertUser(new User(fullNameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText()),"Hidden","Hidden"));
-                Main.login(usernameField.getText(), passwordField.getText());
+        registerButton = new Button("Register")
+        .bounds(50, 425, 200, 50)
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.users.insertUser(new User(fullNameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText()),"Hidden","Hidden"));
+                    Main.login(usernameField.getText(), passwordField.getText());
+                }
             }
-        });
+        );
+
         fullNameLabel = new JLabel("<html><span style='font-size:16px;'>Full Name:</span></html>");
         usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");
         passwordLabel = new JLabel("<html><span style='font-size:16px;'>Password:</span></html>");
@@ -60,7 +63,6 @@ public class RegisterPage implements Screen {
         passwordField.setBounds(50, 250, 200, 50);
         confirmPasswordLabel.setBounds(50, 300, 200, 50);
         confirmPasswordField.setBounds(50, 350, 200, 50);
-        registerButton.setBounds(50, 425, 200, 50);
     }
 
     @Override

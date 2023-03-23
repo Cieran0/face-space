@@ -3,15 +3,14 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class WelcomePage implements Screen {
 
-    JButton login;
-    JButton register;
+    Button login;
+    Button register;
     JLabel face;
 
     public void addComponents(JFrame frame) {
@@ -21,25 +20,28 @@ public class WelcomePage implements Screen {
     }
 
     public WelcomePage() {
-        login = new JButton("Login");
-        register = new JButton("Register");
+
         face = new JLabel("<html><span style='font-size:75px;'>FaceSpace</span></html>",SwingConstants.CENTER);
-        login.setBounds(100, 600, 400, 50);
-        register.setBounds(780, 600, 400, 50);
         face.setBounds(1280/2 - 1000/2, 300, 1000, 100);
-        login.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Main.setPopupScreen(new LoginPage());
+
+        login = new Button("Login")
+        .bounds(100, 600, 400, 50)
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.setPopupScreen(new LoginPage());
+                }
             }
-        }
         );
-        register.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Main.setPopupScreen(new RegisterPage());
+
+        register = new Button("Register")
+        .bounds(780, 600, 400, 50)
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.setPopupScreen(new RegisterPage());
+                }
             }
-        }
         );
     }
 

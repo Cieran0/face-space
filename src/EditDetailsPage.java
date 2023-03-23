@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,7 +16,7 @@ public class EditDetailsPage implements Screen {
     JTextField workPlaceField;
     JTextField homeTownField;
     JTextField passwordField;
-    JButton saveDetailsButton;
+    Button saveDetailsButton;
 
     public void addComponents(JFrame frame){
         frame.setLocationRelativeTo(null);
@@ -33,26 +32,27 @@ public class EditDetailsPage implements Screen {
     }
 
     public EditDetailsPage(){
-        saveDetailsButton = new JButton("Save Details");
+        saveDetailsButton = new Button("Save Details")
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.currentUser.setFullName(fullNameField.getText());
+                    Main.currentUser.setHomeTown(homeTownField.getText());
+                    Main.currentUser.setWorkPlace(workPlaceField.getText());
 
-        saveDetailsButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
-                Main.currentUser.setFullName(fullNameField.getText());
-                Main.currentUser.setHomeTown(homeTownField.getText());
-                Main.currentUser.setWorkPlace(workPlaceField.getText());
-
-                if(passwordField.getText().length() != 0){
-                    Main.currentUser.setPasswordHash(Hash.hash(passwordField.getText()));
-                }
-                for(User user : Main.users.asList()){
-                    if(user.getUsername().equals(Main.currentUser.getUsername())){
-                        user = Main.currentUser;
+                    if(passwordField.getText().length() != 0){
+                        Main.currentUser.setPasswordHash(Hash.hash(passwordField.getText()));
                     }
+                    for(User user : Main.users.asList()){
+                        if(user.getUsername().equals(Main.currentUser.getUsername())){
+                            user = Main.currentUser;
+                        }
+                    }
+                    Main.hidePopup();
+                    Main.setMainScreen(new HomePage(Main.currentUser));
                 }
-                Main.hidePopup();
-                Main.setMainScreen(new HomePage(Main.currentUser));
             }
-        });
+        );
 
         fullNameLabel = new JLabel("<html><span style='font-size:16px;'>Full Name:</span></html>");
         homeTownLabel = new JLabel("<html><span style='font-size:16px;'>Home Town:</span></html>");

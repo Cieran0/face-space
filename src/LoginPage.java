@@ -3,7 +3,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -13,7 +12,7 @@ public class LoginPage implements Screen {
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 400;
 
-    JButton loginButton;
+    Button loginButton;
     JTextField usernameField;
     JTextField passwordField;
     JLabel usernameLabel;
@@ -29,12 +28,14 @@ public class LoginPage implements Screen {
     }
     
     public LoginPage() {
-        loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
-                Main.login(usernameField.getText(),passwordField.getText());
+        loginButton = new Button("Login")
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.login(usernameField.getText(),passwordField.getText());
+                }
             }
-        });
+        );
         usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");
         passwordLabel = new JLabel("<html><span style='font-size:16px;'>Password:</span></html>");
         usernameField = new JTextField("");

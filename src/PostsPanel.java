@@ -10,7 +10,6 @@ import java.util.Queue;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -84,7 +83,6 @@ public class PostsPanel extends JPanel {
             JTextArea content = new JTextArea(post.getContent());
             JLabel postedBy = new JLabel("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName());
             JLabel likes = new JLabel("Likes: " + post.getLikeCount());
-            JButton likeButton = new JButton((post.isLikedBy(Main.currentUser.getId()))? "Unlike" : "Like");
             
             title.setBounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30);
             title.setBorder(blackBorder);
@@ -95,15 +93,17 @@ public class PostsPanel extends JPanel {
             postedBy.setBorder(blackBorder);
             likes.setBounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30);
             likes.setBorder(blackBorder);
-            likeButton.setBounds(505, 310 + i*POST_HEIGHT - yOffset, 150, 30);
 
-            likeButton.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent arg0){
-                    post.toggleLike(Main.currentUser.getId());
-                    reloadPosts(profile,scrollValue,selectedId);
+            Button likeButton = new Button((post.isLikedBy(Main.currentUser.getId()))? "Unlike" : "Like")
+            .bounds(505, 310 + i*POST_HEIGHT - yOffset, 150, 30)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0){
+                        post.toggleLike(Main.currentUser.getId());
+                        reloadPosts(profile,scrollValue,selectedId);
+                    }
                 }
-            });
+            );
 
             posts.add(title);
             posts.add(content);

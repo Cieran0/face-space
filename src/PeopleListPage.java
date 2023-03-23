@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -78,32 +77,31 @@ public class PeopleListPage implements Screen {
         while(!filteredPeople.isEmpty()) {
             User person = filteredPeople.pop();
             JLabel name = new JLabel(person.getFullName());
-            name.setForeground(Theme.SECONDARY_FG);
-            JButton viewProfileButton = new JButton("View Profile");
-
             name.setBounds(25, 10 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 20);
-            viewProfileButton.addActionListener(new ActionListener() {
-                
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    Main.hidePopup();
-                    Main.setMainScreen(new HomePage(person));
-                }
-                
-            });
-            if(Main.currentUser.isFriendsWith(person.getId()) || person.isCurrentUser()) {
-                viewProfileButton.setBounds(25, 30 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 30);
-            } else {
-                viewProfileButton.setBounds(25, 30 + i*PERSON_HEIGHT - yOffset, (3*(WIDTH-50))/4, 30);
-                JButton addButton = new JButton("Add");
-                addButton.setBounds(25 + (3*(WIDTH-50))/4, 30 + i*PERSON_HEIGHT - yOffset, (WIDTH-50)/4, 30);
-                addButton.addActionListener(new ActionListener() {
-                    @Override
+            name.setForeground(Theme.SECONDARY_FG);
+            Button viewProfileButton = new Button("View Profile")
+            .bounds(25, 30 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 30)
+            .actionListener(new ActionListener() 
+                {
                     public void actionPerformed(ActionEvent arg0) {
-                        Main.currentUser.addFriend(person.getId());
-                        reloadFriendsList(scrollValue);
+                        Main.hidePopup();
+                        Main.setMainScreen(new HomePage(person));
                     }
-                });
+                }
+            );
+            
+            if(!(Main.currentUser.isFriendsWith(person.getId()) || person.isCurrentUser())) {
+                viewProfileButton.setBounds(25, 30 + i*PERSON_HEIGHT - yOffset, (3*(WIDTH-50))/4, 30);
+                Button addButton = new Button("Add")
+                .bounds(25 + (3*(WIDTH-50))/4, 30 + i*PERSON_HEIGHT - yOffset, (WIDTH-50)/4, 30)
+                .actionListener(new ActionListener() 
+                    {
+                        public void actionPerformed(ActionEvent arg0) {
+                            Main.currentUser.addFriend(person.getId());
+                            reloadFriendsList(scrollValue);
+                        }
+                    }
+                );
                 peoplePanel.add(addButton);
             }
             peoplePanel.add(viewProfileButton);

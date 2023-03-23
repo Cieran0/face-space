@@ -1,8 +1,6 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -10,8 +8,6 @@ public class DetailsPanel extends JPanel {
 
     public Color foregroundColour;
     public Color backgroundColour;
-
-    //public JButton detailsButton;
     
     public void reload(User profile) {
         this.removeAll();
@@ -28,51 +24,55 @@ public class DetailsPanel extends JPanel {
             this.add(details[i]);
         }
         if(profile.equals(Main.currentUser)){
-            JButton detailsButton = new JButton("Edit Details");
-            detailsButton.setBounds(100,210,100,50);
-            detailsButton.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    Main.setPopupScreen(new EditDetailsPage());
+            Button detailsButton = new Button("Edit Details")
+            .bounds(100,210,100,50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setPopupScreen(new EditDetailsPage());
+                    }
                 }
-            }
             );
+
             this.add(detailsButton);
 
-            JButton newPostButton = new JButton("New Post");
-            newPostButton.setBounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
-            newPostButton.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    Main.setPopupScreen(new NewPostPopup());
+            Button newPostButton = new Button("New Post")
+            .bounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setPopupScreen(new NewPostPopup());
+                    }
                 }
-            }
             );
+
             this.add(newPostButton);
         }
 
         else if(!profile.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(profile.getId())){
-            JButton addFriendButton = new JButton("Add Friend");
-            addFriendButton.setBounds(100,210,100,50);
-            addFriendButton.addActionListener(new ActionListener(){
-                @Override
+            Button addFriendButton = new Button("Add Friend")
+            .bounds(100,210,100,50)
+            .actionListener(new ActionListener()
+            {
                 public void actionPerformed(ActionEvent arg0){
                     Main.currentUser.addFriend(profile.getId());
                     Main.setMainScreen(new HomePage(profile));
                 }
             });
+            
             this.add(addFriendButton);
         }
 
-        JButton logout = new JButton("Logout");
-        logout.setBounds(150, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
-        logout.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Main.logout();
+        Button logout = new Button("Logout")
+        .bounds(150, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.logout();
+                }
             }
-        }
         );
+
         this.add(logout);
         this.revalidate();
         this.repaint();
