@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.Set;
 import java.util.Stack;
 
@@ -116,6 +118,14 @@ public class PeopleListPage implements Screen {
         peoplePanel = new JPanel(null);
         peoplePanel.setBounds(0, 75, WIDTH, HEIGHT-75);
         peoplePanel.setBackground(Theme.SECONDARY_BG);
+
+        peoplePanel.addMouseWheelListener(new MouseWheelListener(){
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent arg0) {
+                scrollBar.setValue(scrollBar.getValue() + arg0.getUnitsToScroll()/3);
+            }
+        });
+
         scrollBar = new JScrollBar(SwingConstants.VERTICAL,0,10,0,110);
         scrollBar.setBounds(WIDTH-20, 0, 20, HEIGHT-75);
         reloadFriendsList(0);
