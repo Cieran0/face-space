@@ -31,36 +31,50 @@ public class PostsPanel extends JPanel {
         posts.add(scrollBar);
         final Integer POST_HEIGHT = 350;
         Stack<Post> filteredPosts = new Stack<Post>();
-        if(!profile.isCurrentUser()) {
-            selectedId++;
-        }
+        int trueSelectedId = (profile.isCurrentUser()? selectedId : selectedId+1);
         for (Post post : Main.allPosts) {
-            if(selectedId == 1 || selectedId == 0) {
-                if(post.getPosterId() == profile.getId()) {
-                    filteredPosts.add(post);
-                } 
-            } else if(selectedId == 2 || selectedId == 0) {
-                for (Long friendId : profile.getFriends()) {
-                    if(post.getPosterId() == friendId) {
+            switch(trueSelectedId) {
+                // TODO: add liked posts to the feed and a selector for it.
+                case 0:
+                case 1:
+                    if(post.getPosterId() == profile.getId()) {
+                        filteredPosts.add(post);
+                    }
+
+                    if(trueSelectedId != 0) 
+                        break;
+                case 2:
+                    for (Long friendId : profile.getFriends()) {
+                        if(post.getPosterId() == friendId) {
+                            filteredPosts.add(post);
+                        } 
+                    }
+
+                    if(trueSelectedId != 0) 
+                        break;
+                case 3:
+                    if(post.mentions(profile)) {
                         filteredPosts.add(post);
                     } 
-                }
-            } else if (selectedId == 3 || selectedId == 0) {
-                if(post.mentions(profile)) {
-                    filteredPosts.add(post);
-                } 
-            } else if (selectedId == 4 || selectedId == 0) {
-                for (Long friendId : profile.getFriends()) {
-                    if(post.mentions(Main.users.searchTree(friendId))) {
-                        filteredPosts.add(post);
-                    } 
-                }
+
+                    if(trueSelectedId != 0) 
+                        break;
+                case 4:
+                    for (Long friendId : profile.getFriends()) {
+                        if(post.mentions(Main.users.searchTree(friendId))) {
+                            filteredPosts.add(post);
+                        } 
+                    }
+                    if(trueSelectedId != 0) 
+                        break;
+                default:
+                    break;
             }
         }
         int postsCount = filteredPosts.size();
-        int totalHeight = postsCount*POST_HEIGHT - (Main.MAIN_WINDOW_HEIGHT-50);
-        int scrollInterval = totalHeight/100;
-        int yOffset = (totalHeight+50 > Main.MAIN_WINDOW_HEIGHT)? scrollInterval*scrollValue : 0;
+        int totalHeight = postsCount*POST_HEIGHT + 50;
+        int scrollInterval = (totalHeight - (Main.MAIN_WINDOW_HEIGHT));
+        int yOffset = (scrollInterval > 0)? (scrollInterval*scrollValue)/100 : 0;
 
         int i = 0;
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
@@ -69,16 +83,33 @@ public class PostsPanel extends JPanel {
             JLabel title = new JLabel("<html><span style='font-size:16px;'>"+post.getTitle()+"</span></html>",SwingConstants.CENTER);
             JTextArea content = new JTextArea(post.getContent());
             JLabel postedBy = new JLabel("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName());
+            JLabel likes = new JLabel("Likes: " + post.getLikeCount());
+            JButton likeButton = new JButton((post.isLikedBy(Main.currentUser.getId()))? "Unlike" : "Like");
+            
             title.setBounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30);
             title.setBorder(blackBorder);
             content.setBounds(25, 50 + i*POST_HEIGHT - yOffset, 630, 250);
             content.setBorder(blackBorder);
             content.setEditable(false);
-            postedBy.setBounds(25, 310 + i*POST_HEIGHT - yOffset, 630, 30);
+            postedBy.setBounds(25, 310 + i*POST_HEIGHT - yOffset, 310, 30);
             postedBy.setBorder(blackBorder);
+            likes.setBounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30);
+            likes.setBorder(blackBorder);
+            likeButton.setBounds(505, 310 + i*POST_HEIGHT - yOffset, 150, 30);
+
+            likeButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent arg0){
+                    post.toggleLike(Main.currentUser.getId());
+                    reloadPosts(profile,scrollValue,selectedId);
+                }
+            });
+
             posts.add(title);
             posts.add(content);
             posts.add(postedBy);
+            posts.add(likes);
+            posts.add(likeButton);
             i++;
         }
         posts.revalidate();
