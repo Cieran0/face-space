@@ -45,7 +45,7 @@ public class FriendsPanel extends JPanel {
                     }
                 }
                 );
-            if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(friendID)){
+            if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(friendID)){
                 viewProfile.setBounds(50,(i*50)+125,125,25);
                 JButton addFriendButton = new JButton("Add");
                 addFriendButton.setBounds(175,(i*50)+125,75,25);
@@ -72,11 +72,11 @@ public class FriendsPanel extends JPanel {
         }
         
         JButton friendsListButton = new JButton("All Friends");
-        friendsListButton.setBounds(50,300,200,50);
+        friendsListButton.setBounds(50,325,200,50);
         friendsListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0){
-                Main.setPopupScreen(new FriendsListPage());
+                Main.setPopupScreen(new PeopleListPage(isCurrentUser,friendIDs));
             }
         });
         

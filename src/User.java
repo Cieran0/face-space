@@ -98,22 +98,9 @@ public class User {
         Set<Long> recommendedFriends = new HashSet<Long>();
         List<User> listOfUsers = Main.users.asList();
         for (User user : listOfUsers) {
-            if (user.equals(this)) continue;
-            if (this.friendIDs.contains(user.id)) continue;
-            if (user.workPlace.equals(this.workPlace)){
+            if (user.equals(this) || this.isFriendsWith(user)) continue;
+            if (this.hasSameWorkPlaceAs(user) || this.hasSameHomeTownAs(user) || this.hasMutalFriendWith(user)) {
                 recommendedFriends.add(user.id);
-            }
-            else if (user.homeTown.equals(this.homeTown)) {
-                recommendedFriends.add(user.id);
-            }
-            else {
-                for (Long friendID : this.friendIDs){
-                    User userFriend = Main.users.searchTree(friendID);
-
-                    if (userFriend.getFriends().contains(user.id)){
-                        recommendedFriends.add(user.id);
-                    }
-                }
             }
         }
         return recommendedFriends;
@@ -123,4 +110,38 @@ public class User {
         return this.equals(Main.currentUser);
     }
 
+    public boolean hasSameHomeTownAs(User otherUser) {
+        String thisHomeTown = this.homeTown.toLowerCase();
+        String otherHomeTown = otherUser.homeTown.toLowerCase();
+        return thisHomeTown.equals(otherHomeTown) && !thisHomeTown.equals("hidden") && !otherHomeTown.equals("hidden");
+    }
+
+    public boolean hasSameWorkPlaceAs(User otherUser) {
+        String thisWorkPlace = this.workPlace.toLowerCase();
+        String otherWorkPlace = otherUser.workPlace.toLowerCase();
+        return thisWorkPlace.equals(otherWorkPlace) && !thisWorkPlace.equals("hidden") && !otherWorkPlace.equals("hidden");
+    }
+
+    public boolean isFriendsWith(User otherUser) {
+        return isFriendsWith(otherUser.id);
+    }
+
+    public boolean isFriendsWith(long id) {
+        return this.friendIDs.contains(id);
+    }
+
+    public boolean hasMutalFriendWith(User otherUser) {
+        return hasMutalFriendWith(otherUser.id);
+    }
+
+    public boolean hasMutalFriendWith(long id) {
+        for (Long friendID : this.friendIDs){
+            User userFriend = Main.users.searchTree(friendID);
+
+            if (userFriend.isFriendsWith(id)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

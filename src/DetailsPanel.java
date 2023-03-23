@@ -51,7 +51,7 @@ public class DetailsPanel extends JPanel {
             this.add(newPostButton);
         }
 
-        else if(!profile.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(profile.getId())){
+        else if(!profile.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(profile.getId())){
             JButton addFriendButton = new JButton("Add Friend");
             addFriendButton.setBounds(100,210,100,50);
             addFriendButton.addActionListener(new ActionListener(){
