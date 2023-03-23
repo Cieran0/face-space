@@ -22,6 +22,13 @@ public class Post {
         this.likedBy = new HashSet<Long>();
     }
 
+    public Post(long posterId, Set<Long> likedBy, String title, String content) {
+        this.title = title;
+        this.content = content;
+        this.posterId = posterId;
+        this.likedBy = likedBy;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -80,7 +87,12 @@ public class Post {
 
     @Override
     public String toString() {
-        String header = this.posterId.toString() + '\n' + this.title + '\n';
+        String header = this.posterId.toString() + '\n';
+        header += likedBy.size() + "\n";
+        for (Long liker : likedBy) {
+            header += liker.toString() + '\n';
+        }
+        header+= this.title + '\n';
         header += this.content + '\3';
         return header;
     }

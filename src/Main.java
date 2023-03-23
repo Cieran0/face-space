@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import javax.swing.*;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -40,8 +42,8 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        readInPosts();
         readFile();
+        readInPosts();
 //        for (User user : users.asList()) {
 //            for (User friend : users.asList()) {
 //                user.addFriend(friend.getId());
@@ -170,7 +172,6 @@ public class Main {
 
     private static void readInPosts() {
         Scanner scan;
-        //TODO: make likes be read in and wrote out!
         try {
             scan = new Scanner(new File("posts.txt"));
             int count = scan.nextInt();
@@ -178,9 +179,14 @@ public class Main {
             scan.nextLine();
             while (count >= 1) {
                 Long posterId = Long.parseLong(scan.nextLine());
+                Integer likeCount = Integer.parseInt(scan.nextLine());
+                Set<Long> likedBy = new HashSet<Long>();
+                for (int i = 0; i < likeCount; i++) {
+                    likedBy.add(Long.parseLong(scan.nextLine()));
+                }
                 String title = scan.nextLine();
                 String content = scan.next();
-                allPosts.add(new Post(posterId, title, content));
+                allPosts.add(new Post(posterId, likedBy, title, content));
                 count--;
             }
             scan.close();
