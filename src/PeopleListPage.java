@@ -7,7 +7,6 @@ import java.awt.event.MouseWheelListener;
 import java.util.Set;
 import java.util.Stack;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.SwingConstants;
@@ -17,9 +16,9 @@ public class PeopleListPage implements Screen {
     public final Integer WIDTH = 400;
     public final Integer HEIGHT = 400;
 
-    JLabel filterLabel;
-    JLabel sortLabel;
-    JLabel friendsLabel;
+    Label filterLabel;
+    Label sortLabel;
+    Label friendsLabel;
     JComboBox<String>  filterComboBox;
     JComboBox<String> sortComboBox;
     String[] filterOptions;
@@ -69,9 +68,10 @@ public class PeopleListPage implements Screen {
         int i = 0;
         while(!filteredPeople.isEmpty()) {
             User person = filteredPeople.pop();
-            JLabel name = new JLabel(person.getFullName());
-            name.setBounds(25, 10 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 20);
-            name.setForeground(Theme.SECONDARY_FG);
+            Label name = new Label(person.getFullName())
+            .bounds(25, 10 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 20)
+            .bright();
+
             Button viewProfileButton = new Button("View Profile")
             .bounds(25, 30 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 30)
             .actionListener(new ActionListener() 
@@ -120,11 +120,12 @@ public class PeopleListPage implements Screen {
         scrollBar = new JScrollBar(SwingConstants.VERTICAL,0,10,0,110);
         scrollBar.setBounds(WIDTH-20, 0, 20, HEIGHT-75);
         reloadFriendsList(0);
-        filterLabel = new JLabel("<html><span style='font-size:16px;'>Filter:</span></html>");
-        filterLabel.setBounds(50,0,100,30);
 
-        sortLabel = new JLabel("<html><span style='font-size:16px;'>Sort:</span></html>");
-        sortLabel.setBounds(210,0,100,30);
+        filterLabel = new Label("Filter:").big()
+        .bounds(50,0,100,30);
+
+        sortLabel = new Label("Sort:")
+        .bounds(210,0,100,30);
 
         filterComboBox = new JComboBox<String>(filterOptions);
         filterComboBox.setSelectedIndex(selectedFiterID);

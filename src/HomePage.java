@@ -34,7 +34,6 @@ public class HomePage implements Screen{
 
     @Override
     public void addComponents(JFrame frame) {
-        frame.setLocationRelativeTo(null);
         frame.add(friendsPanel);
         frame.add(detailsPanel);
         frame.add(postsPanel);

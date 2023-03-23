@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTextField;
 
@@ -9,7 +8,7 @@ public class SearchPage implements Screen{
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 310;
 
-    JLabel searchLabel;
+    Label searchLabel;
     JTextField searchField;
     Button searchButton;
 
@@ -48,8 +47,9 @@ public class SearchPage implements Screen{
             }
         );
 
-        searchLabel = new JLabel("<html><span style='font-size:32px;'>Search</span></html>");
-        searchLabel.setBounds(50,0,200,50);
+        searchLabel = new Label("Search")
+        .bigger()
+        .bounds(50,0,200,50);
 
         searchField = new JTextField();
         searchField.setBounds(50,50,200,50);

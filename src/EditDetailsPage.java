@@ -1,17 +1,16 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class EditDetailsPage implements Screen {
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 550;
 
-    JLabel fullNameLabel;
-    JLabel workPlaceLabel;
-    JLabel homeTownLabel;
-    JLabel passwordLabel;
+    Label fullNameLabel;
+    Label workPlaceLabel;
+    Label homeTownLabel;
+    Label passwordLabel;
     JTextField fullNameField;
     JTextField workPlaceField;
     JTextField homeTownField;
@@ -54,23 +53,27 @@ public class EditDetailsPage implements Screen {
             }
         );
 
-        fullNameLabel = new JLabel("<html><span style='font-size:16px;'>Full Name:</span></html>");
-        homeTownLabel = new JLabel("<html><span style='font-size:16px;'>Home Town:</span></html>");
-        workPlaceLabel = new JLabel("<html><span style='font-size:16px;'>Work Place:</span></html>");
-        passwordLabel = new JLabel("<html><span style='font-size:16px;'>Password:</span></html>");
+        fullNameLabel = new Label("Full Name:").big()
+        .bounds(50, 0, 200, 50);
+
+        homeTownLabel = new Label("Home Town:").big()
+        .bounds(50, 100, 200, 50);
+
+        workPlaceLabel = new Label("Work Place:").big()
+        .bounds(50, 200, 200, 50);
+
+        passwordLabel = new Label("Password:").big()
+        .bounds(50, 300, 200, 50);
 
         fullNameField = new JTextField(Main.currentUser.getFullName());
         homeTownField = new JTextField(Main.currentUser.getHomeTown());
         workPlaceField = new JTextField(Main.currentUser.getWorkPlace());
         passwordField = new JTextField("");
 
-        fullNameLabel.setBounds(50, 0, 200, 50);
+        
         fullNameField.setBounds(50, 50, 200, 50);
-        homeTownLabel.setBounds(50, 100, 200, 50);
         homeTownField.setBounds(50, 150, 200, 50);
-        workPlaceLabel.setBounds(50, 200, 200, 50);
         workPlaceField.setBounds(50, 250, 200, 50);
-        passwordLabel.setBounds(50, 300, 200, 50);
         passwordField.setBounds(50, 350, 200, 50);
         saveDetailsButton.setBounds(50, 400, 200, 50);
     }

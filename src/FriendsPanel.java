@@ -1,7 +1,6 @@
 import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 
@@ -26,9 +25,10 @@ public class FriendsPanel extends JPanel {
 
         this.add(searchButton);
 
-        JLabel yourFriendsLabel = new JLabel((isCurrentUser) ? "Your Friends: " : "Their Friends: ");
-        yourFriendsLabel.setBounds(50, 100 , 200, 50);
-        yourFriendsLabel.setForeground(foregroundColour);
+        Label yourFriendsLabel = new Label((isCurrentUser) ? "Your Friends: " : "Their Friends: ")
+        .bright()
+        .bounds(50, 100 , 200, 50);
+
         this.add(yourFriendsLabel);
         int i = 1;
         for (Long friendID : friendIDs) {
@@ -62,11 +62,12 @@ public class FriendsPanel extends JPanel {
             }
 
                 User friend = Main.users.searchTree(friendID);
-                JLabel friendName = new JLabel(friend.getFullName());
-                friendName.setBounds(50, (i*50)+100, 200, 25);
+                Label friendName = new Label(friend.getFullName())
+                .bounds(50, (i*50)+100, 200, 25)
+                .bright();
+
                 this.add(friendName);
                 this.add(viewProfile);
-                friendName.setForeground(foregroundColour);
                 i++;
         }
         
@@ -82,9 +83,10 @@ public class FriendsPanel extends JPanel {
         
         if (isCurrentUser){
             i=1;
-            JLabel reccomendedFriendsLabel = new JLabel("Recommended friends: ");
-            reccomendedFriendsLabel.setBounds(50, 400 , 300, 50);
-            reccomendedFriendsLabel.setForeground(foregroundColour);
+            Label reccomendedFriendsLabel = new Label("Recommended friends: ")
+            .bounds(50, 400 , 300, 50)
+            .bright();
+
             for (long friendID : Main.currentUser.recommendFriends()) {
                 User currentFriend = Main.users.searchTree(friendID);
                 Button viewProfile = new Button("View Profile")
@@ -110,11 +112,10 @@ public class FriendsPanel extends JPanel {
                 this.add(addFriendButton);
 
                 User friend = Main.users.searchTree(friendID);
-                JLabel friendName = new JLabel(friend.getFullName());
-                friendName.setBounds(50, (i*50)+400, 200, 25);
+                Label friendName = new Label(friend.getFullName())
+                .bounds(50, (i*50)+400, 200, 25).bright();
                 this.add(friendName);
                 this.add(viewProfile);
-                friendName.setForeground(foregroundColour);
                 i++;
             }
             this.add(reccomendedFriendsLabel);

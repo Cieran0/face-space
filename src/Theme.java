@@ -7,4 +7,5 @@ public abstract class Theme {
     static final Color SECONDARY_FG = Color.WHITE;
     static final Color BUTTON_BG_1 = Color.WHITE;
     static final Color BUTTON_BG_2 = Color.LIGHT_GRAY;
+    static final Color BUTTON_TEXT = Color.DARK_GRAY;
 }

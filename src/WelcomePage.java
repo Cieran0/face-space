@@ -2,16 +2,14 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class WelcomePage implements Screen {
 
     Button login;
     Button register;
-    JLabel face;
+    Label face;
 
     public void addComponents(JFrame frame) {
         frame.add(login);
@@ -21,8 +19,9 @@ public class WelcomePage implements Screen {
 
     public WelcomePage() {
 
-        face = new JLabel("<html><span style='font-size:75px;'>FaceSpace</span></html>",SwingConstants.CENTER);
-        face.setBounds(1280/2 - 1000/2, 300, 1000, 100);
+        face = new Label("FaceSpace",SwingConstants.CENTER)
+        .biggest()
+        .bounds(1280/2 - 1000/2, 300, 1000, 100);
 
         login = new Button("Login")
         .bounds(100, 600, 400, 50)

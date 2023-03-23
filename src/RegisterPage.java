@@ -1,8 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class RegisterPage implements Screen {
@@ -15,10 +13,10 @@ public class RegisterPage implements Screen {
     JTextField usernameField;
     JTextField passwordField;
     JTextField confirmPasswordField;
-    JLabel fullNameLabel;
-    JLabel usernameLabel;
-    JLabel passwordLabel;
-    JLabel confirmPasswordLabel;
+    Label fullNameLabel;
+    Label usernameLabel;
+    Label passwordLabel;
+    Label confirmPasswordLabel;
 
     public void addComponents(JFrame frame) {
         frame.setLocationRelativeTo(null);
@@ -45,23 +43,30 @@ public class RegisterPage implements Screen {
             }
         );
 
-        fullNameLabel = new JLabel("<html><span style='font-size:16px;'>Full Name:</span></html>");
-        usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");
-        passwordLabel = new JLabel("<html><span style='font-size:16px;'>Password:</span></html>");
-        confirmPasswordLabel = new JLabel("<html><span style='font-size:16px;'>Confirm Password:</span></html>");
+        fullNameLabel = new Label("Full Name:").big()
+        .bounds(50, 0, 200, 50);
+
+        usernameLabel = new Label("Username:").big()
+        .bounds(50, 100, 200, 50);
+
+        passwordLabel = new Label("Password:").big()
+        .bounds(50, 200, 200, 50);
+
+        confirmPasswordLabel = new Label("Confirm Password:").big()
+        .bounds(50, 300, 200, 50);
 
         fullNameField = new JTextField("");
         usernameField = new JTextField("");
         passwordField = new JTextField("");
         confirmPasswordField = new JTextField("");
 
-        fullNameLabel.setBounds(50, 0, 200, 50);
+
         fullNameField.setBounds(50, 50, 200, 50);
-        usernameLabel.setBounds(50, 100, 200, 50);
+        
         usernameField.setBounds(50, 150, 200, 50);
-        passwordLabel.setBounds(50, 200, 200, 50);
+        
         passwordField.setBounds(50, 250, 200, 50);
-        confirmPasswordLabel.setBounds(50, 300, 200, 50);
+        
         confirmPasswordField.setBounds(50, 350, 200, 50);
     }
 

@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DetailsPanel extends JPanel {
@@ -12,14 +11,14 @@ public class DetailsPanel extends JPanel {
     public void reload(User profile) {
         this.removeAll();
 
-        JLabel[] details = new JLabel[4];
-        details[0] = new JLabel(profile.getFullName());
-        details[1] = new JLabel("@" + profile.getUsername());
-        details[2] = new JLabel("Workplace: " + profile.getWorkPlace());
-        details[3] = new JLabel("Hometown: " + profile.getHomeTown());
+        Label[] details = new Label[4];
+        details[0] = new Label(profile.getFullName());
+        details[1] = new Label("@" + profile.getUsername());
+        details[2] = new Label("Workplace: " + profile.getWorkPlace());
+        details[3] = new Label("Hometown: " + profile.getHomeTown());
 
         for (int i = 0; i < details.length; i++) {
-            details[i].setForeground(foregroundColour);
+            details[i].bright();
             details[i].setBounds(0, i*50, 200, 20);
             this.add(details[i]);
         }

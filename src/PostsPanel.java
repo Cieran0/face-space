@@ -8,7 +8,6 @@ import java.awt.event.MouseWheelListener;
 import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
@@ -76,19 +75,23 @@ public class PostsPanel extends JPanel {
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
         while(!filteredPosts.isEmpty()) {
             Post post = filteredPosts.pop();
-            JLabel title = new JLabel("<html><span style='font-size:16px;'>"+post.getTitle()+"</span></html>",SwingConstants.CENTER);
             JTextArea content = new JTextArea(post.getContent());
-            JLabel postedBy = new JLabel("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName());
-            JLabel likes = new JLabel("Likes: " + post.getLikeCount());
+
+            Label title = new Label(post.getTitle(),SwingConstants.CENTER)
+            .big()
+            .bounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30);
+
+            Label postedBy = new Label("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName())
+            .bounds(25, 310 + i*POST_HEIGHT - yOffset, 310, 30);
+
+            Label likes = new Label("Likes: " + post.getLikeCount())
+            .bounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30);
             
-            title.setBounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30);
             title.setBorder(blackBorder);
             content.setBounds(25, 50 + i*POST_HEIGHT - yOffset, 630, 250);
             content.setBorder(blackBorder);
             content.setEditable(false);
-            postedBy.setBounds(25, 310 + i*POST_HEIGHT - yOffset, 310, 30);
             postedBy.setBorder(blackBorder);
-            likes.setBounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30);
             likes.setBorder(blackBorder);
 
             Button likeButton = new Button((post.isLikedBy(Main.currentUser.getId()))? "Unlike" : "Like")

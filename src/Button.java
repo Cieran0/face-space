@@ -11,7 +11,8 @@ public class Button extends JButton {
     public Button(String text){
         super(text);
         setContentAreaFilled(false);
-        setFocusPainted(false); // used for demonstration
+        setFocusPainted(false);
+        fgColour(Theme.BUTTON_TEXT);
     }
 
     public Button bounds(int x, int y, int width, int height) {

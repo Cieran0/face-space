@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -37,21 +36,23 @@ public class NewPostPopup implements Screen {
     }
 
     JTextArea content;
-    JLabel contentLabel;
+    Label contentLabel;
     JTextField titleField;
-    JLabel titleLabel;
+    Label titleLabel;
     Button postButton;
 
     public NewPostPopup() {
         Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
         this.titleField = new JTextField("");
-        this.titleLabel = new JLabel("<html><span style='font-size:16px;'>Title:</span></html>");
         this.content = new JTextArea("");
-        this.contentLabel = new JLabel("<html><span style='font-size:16px;'>Content:</span></html>");
+
+        this.titleLabel = new Label("Title:").big()
+        .bounds(25, 25, WIDTH-50, 25);
+
+        this.contentLabel = new Label("Content:").big()
+        .bounds(25, 125, WIDTH-50, 25);
         
-        this.titleLabel.setBounds(25, 25, WIDTH-50, 25);
         this.titleField.setBounds(25, 50, WIDTH-50, 25);
-        this.contentLabel.setBounds(25, 125, WIDTH-50, 25);
         this.content.setBounds(25,150,WIDTH-50,HEIGHT-250);
         
         this.titleField.setBorder(blackBorder);
