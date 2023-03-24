@@ -31,7 +31,6 @@ public class RegisterPage implements Screen {
     }
     
     public RegisterPage() {
-        //TODO: Validation for registering.
         registerButton = new Button("Register")
         .bounds(50, 425, 200, 50)
         .actionListener(new ActionListener()
