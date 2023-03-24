@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.*;
 import java.util.Queue;
 import java.util.Scanner;
@@ -24,8 +26,7 @@ public class Main {
 
     public static WindowListener wl = new WindowListener() {
         public void windowClosing(WindowEvent arg0) {
-            writeToFile(users);
-            writePostsToFile(allPosts);
+            writeToFile(users,allPosts);
             System.exit(0);
         }
 
@@ -47,7 +48,6 @@ public class Main {
         UIManager.put("Panel.background", Theme.PRIMARY_BG);
 
         readFile();
-        readInPosts();
 
         mainWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
         popupWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
@@ -117,49 +117,19 @@ public class Main {
         return user.getId();
     }
 
-    public static void writeToFile(UserTree users){
-        int noFriends = 0;
+    public static void writeToFile(UserTree users, Queue<Post> posts){
+        List<User> userList = users.asList(); 
+        int numberOfUsers = userList.size();
         try{
             FileWriter writer = new FileWriter("accounts.txt");
-            for (User user : users.asList()) {
-                noFriends = user.getFriends().size();
-                writer.write(user.getFullName() + "\n"+user.getUsername()+"\n" + user.getPasswordHash().toString() + "\n" + user.getWorkPlace() + "\n"+user.getHomeTown() +"\n" + noFriends + "\n");
-                //Long[] friends = user.getFriends().toArray(Long[]::new);
+            writer.write(numberOfUsers + "\n");
+            for (User user : userList) {
+                writer.write(user.toString());
                 Long[] friends = user.getFriends().toArray(new Long[user.getFriends().size()]);
-                for(int i = 0; i< noFriends; i++){
+                for(int i = 0; i< friends.length; i++){
                     writer.write(friends[i] + "\n");
                 }
             }
-            writer.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void readFile(){
-        int noFriends = 0;
-        try{
-            File f = new File("accounts.txt");
-            Scanner scRead = new Scanner(f);
-            while(scRead.hasNextLine()){
-                User newUser = new User(scRead.nextLine(),scRead.nextLine(),Long.parseLong(scRead.nextLine()),scRead.nextLine(),scRead.nextLine());
-                Main.users.insertUser(newUser);
-                noFriends = scRead.nextInt();
-                scRead.nextLine();
-                for(int i = 0; i<noFriends; i++){
-                    newUser.addFriend(scRead.nextLong());
-                    scRead.nextLine();
-                }
-            }
-            scRead.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private static void writePostsToFile(Queue<Post> allPosts) {
-        try{
-            FileWriter writer = new FileWriter("posts.txt");
             Integer numberOfPosts = allPosts.size();
             writer.write(numberOfPosts.toString() + '\n');
             for (Post post : allPosts) {
@@ -172,28 +142,47 @@ public class Main {
         }
     }
 
-    private static void readInPosts() {
-        Scanner scan;
-        try {
-            scan = new Scanner(new File("posts.txt"));
-            int count = scan.nextInt();
-            scan.useDelimiter("\3");
-            scan.nextLine();
+    public static void readFile(){
+        int noFriends = 0;
+        try{
+            File f = new File("accounts.txt");
+            Scanner scRead = new Scanner(f);
+            int numberOfUsers = Integer.parseInt(scRead.nextLine());
+            for (int i = 0; i < numberOfUsers; i++) {
+
+                String fullName = scRead.nextLine();
+                String username = scRead.nextLine();
+                Long passwordHash = Long.parseLong(scRead.nextLine());
+                String workPlace = scRead.nextLine();
+                String homeTown = scRead.nextLine();
+
+                User newUser = new User(fullName, username, passwordHash, workPlace, homeTown);
+                Main.users.insertUser(newUser);
+
+                noFriends = Integer.parseInt(scRead.nextLine());
+                for(int j = 0; j<noFriends; j++){
+                    newUser.addFriend(Long.parseLong(scRead.nextLine()));
+                }
+            }
+
+            scRead.useDelimiter("\3");
+            int count = Integer.parseInt(scRead.nextLine());
             while (count >= 1) {
-                Long posterId = Long.parseLong(scan.nextLine());
-                Integer likeCount = Integer.parseInt(scan.nextLine());
+                Long posterId = Long.parseLong(scRead.nextLine());
+                Integer likeCount = Integer.parseInt(scRead.nextLine());
                 Set<Long> likedBy = new HashSet<Long>();
                 for (int i = 0; i < likeCount; i++) {
-                    likedBy.add(Long.parseLong(scan.nextLine()));
+                    likedBy.add(Long.parseLong(scRead.nextLine()));
                 }
-                String title = scan.nextLine();
-                String content = scan.next();
+                String title = scRead.nextLine();
+                String content = scRead.next();
                 allPosts.add(new Post(posterId, likedBy, title, content));
-                scan.nextLine();
+                scRead.nextLine();
                 count--;
             }
-            scan.close();
-        } catch (Exception e) {
+            scRead.close();
+        }
+            catch(Exception e){
             e.printStackTrace();
         }
     }

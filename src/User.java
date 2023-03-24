@@ -169,5 +169,9 @@ public class User {
         ); 
     }  
 
+    @Override
+    public String toString() {
+        return fullName + "\n" + username + "\n" + passwordHash.toString() + "\n" + workPlace + "\n" + homeTown + "\n" + friendIDs.size() + "\n";
+    }
 
 }

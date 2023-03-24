@@ -60,6 +60,7 @@ public class UserTree {
     }
 
     public User searchTree(long id){
+        if(root==null) return null;
         Node head = root;
 
         while(head.id != id){

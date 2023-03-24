@@ -55,7 +55,9 @@ public class RegisterPage implements Screen {
                         errorMessage = "Confirm Password field is empty";
                     } else if (!confirmPassword.equals(password)) {
                         errorMessage = "Confirm Password doesn't match Password";
-                    } 
+                    } else if (username.matches(".*\s.*")) {
+                        errorMessage = "Username can't contain whitespace";
+                    }
 
                     if(errorMessage != null) {
                         Main.showErrorMessage(errorMessage);
