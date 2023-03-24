@@ -37,6 +37,32 @@ public class RegisterPage implements Screen {
         .actionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent arg0) {
+                    String fullName = fullNameField.getText();
+                    String username = usernameField.getText();
+                    String password = passwordField.getText();
+                    String confirmPassword = confirmPasswordField.getText();
+                    String errorMessage = null;
+                    long id = Hash.hash(username);
+
+                    if(fullName.isBlank()) {
+                        errorMessage = "Full Name field is empty";
+                    } else if (username.isBlank()) {
+                        errorMessage = "Username field is empty";
+                    } else if (Main.users.searchTree(id) != null) {
+                        errorMessage = "A user with that username already exists";
+                    } else if (password.isBlank()) {
+                        errorMessage = "Password field is empty";
+                    } else if (confirmPassword.isBlank()) {
+                        errorMessage = "Confirm Password field is empty";
+                    } else if (!confirmPassword.equals(password)) {
+                        errorMessage = "Confirm Password doesn't match Password";
+                    } 
+
+                    if(errorMessage != null) {
+                        Main.showErrorMessage(errorMessage);
+                        return;
+                    }
+
                     Main.users.insertUser(new User(fullNameField.getText(),usernameField.getText(),Hash.hash(passwordField.getText()),"Hidden","Hidden"));
                     Main.login(usernameField.getText(), passwordField.getText());
                 }
