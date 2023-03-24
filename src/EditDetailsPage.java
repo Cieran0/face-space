@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class EditDetailsPage implements Screen {
     public final Integer WIDTH = 300;
@@ -11,10 +10,10 @@ public class EditDetailsPage implements Screen {
     Label workPlaceLabel;
     Label homeTownLabel;
     Label passwordLabel;
-    JTextField fullNameField;
-    JTextField workPlaceField;
-    JTextField homeTownField;
-    JTextField passwordField;
+    TextField fullNameField;
+    TextField workPlaceField;
+    TextField homeTownField;
+    TextField passwordField;
     Button saveDetailsButton;
 
     public void addComponents(JFrame frame){
@@ -32,6 +31,7 @@ public class EditDetailsPage implements Screen {
 
     public EditDetailsPage(){
         saveDetailsButton = new Button("Save Details")
+        .bounds(50, 400, 200, 50)
         .actionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent arg0) {
@@ -65,17 +65,19 @@ public class EditDetailsPage implements Screen {
         passwordLabel = new Label("Password:").big()
         .bounds(50, 300, 200, 50);
 
-        fullNameField = new JTextField(Main.currentUser.getFullName());
-        homeTownField = new JTextField(Main.currentUser.getHomeTown());
-        workPlaceField = new JTextField(Main.currentUser.getWorkPlace());
-        passwordField = new JTextField("");
+        fullNameField = new TextField(Main.currentUser.getFullName())
+        .bounds(50, 50, 200, 50);
 
+        homeTownField = new TextField(Main.currentUser.getHomeTown())
+        .bounds(50, 150, 200, 50);
+
+        workPlaceField = new TextField(Main.currentUser.getWorkPlace())
+        .bounds(50, 250, 200, 50);
         
-        fullNameField.setBounds(50, 50, 200, 50);
-        homeTownField.setBounds(50, 150, 200, 50);
-        workPlaceField.setBounds(50, 250, 200, 50);
-        passwordField.setBounds(50, 350, 200, 50);
-        saveDetailsButton.setBounds(50, 400, 200, 50);
+        passwordField = new TextField("")
+        .bounds(50, 350, 200, 50);
+        
+
     }
 
     @Override

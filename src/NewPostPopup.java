@@ -1,15 +1,9 @@
 import javax.swing.JFrame;
-
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
-import static javax.swing.JOptionPane.showMessageDialog;
-
 
 public class NewPostPopup implements Screen {
 
@@ -37,14 +31,15 @@ public class NewPostPopup implements Screen {
 
     JTextArea content;
     Label contentLabel;
-    JTextField titleField;
+    TextField titleField;
     Label titleLabel;
     Button postButton;
 
     public NewPostPopup() {
-        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-        this.titleField = new JTextField("");
-        this.content = new JTextArea("");
+        Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
+
+        this.titleField = new TextField("")
+        .bounds(25, 50, WIDTH-50, 25);
 
         this.titleLabel = new Label("Title:").big()
         .bounds(25, 25, WIDTH-50, 25);
@@ -52,11 +47,14 @@ public class NewPostPopup implements Screen {
         this.contentLabel = new Label("Content:").big()
         .bounds(25, 125, WIDTH-50, 25);
         
-        this.titleField.setBounds(25, 50, WIDTH-50, 25);
+        this.content = new JTextArea("");
         this.content.setBounds(25,150,WIDTH-50,HEIGHT-250);
-        
-        this.titleField.setBorder(blackBorder);
-        this.content.setBorder(blackBorder);
+        this.content.setBackground(Theme.ACCENT_BG);
+        this.content.setForeground(Theme.SECONDARY_FG);
+        this.content.setFont(content.getFont().deriveFont(16f));
+        this.content.setCaretColor(Theme.SECONDARY_FG);
+        this.content.setBorder(border);
+        this.content.setLineWrap(true);
         
         this.postButton = new Button("Post")
         .bounds(WIDTH-200,HEIGHT-75,150,50)
@@ -66,7 +64,7 @@ public class NewPostPopup implements Screen {
                     String titleString = titleField.getText();
                     String contentString = content.getText();
                     if(titleString.isEmpty() || contentString.isEmpty()) {
-                        showMessageDialog(null,"Title or content is empty!");
+                        Main.showErrorMessage("Title or content is empty!");
                         return;
                     }
                     Main.allPosts.add(new Post(Main.currentUser.getId(), titleString, contentString));

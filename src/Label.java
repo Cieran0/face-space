@@ -1,4 +1,7 @@
 import javax.swing.JLabel;
+import javax.swing.border.Border;
+
+import java.awt.Color;
 
 public class Label extends JLabel {
     public Label(String text) {
@@ -35,6 +38,22 @@ public class Label extends JLabel {
 
     public Label bounds(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
+        return this;
+    }
+
+    public Label bgColour(Color bg) {
+        this.setOpaque(true);
+        this.setBackground(bg);
+        return this;
+    }
+
+    public Label fgColour(Color fg) {
+        this.setForeground(fg);
+        return this;
+    }
+
+    public Label border(Border border) {
+        this.setBorder(border);
         return this;
     }
 

@@ -1,12 +1,8 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 public class DetailsPanel extends JPanel {
-
-    public Color foregroundColour;
-    public Color backgroundColour;
     
     public void reload(User profile) {
         this.removeAll();
@@ -77,11 +73,9 @@ public class DetailsPanel extends JPanel {
         this.repaint();
     }
 
-    public DetailsPanel(User profile, Color foregroundColour, Color backgroundColour) {
+    public DetailsPanel(User profile) {
         super(null);
-        this.foregroundColour=foregroundColour;
-        this.backgroundColour=backgroundColour;
-        this.setBackground(backgroundColour);
+        this.setBackground(Theme.SECONDARY_BG);
         reload(profile);
     }
 

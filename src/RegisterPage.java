@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class RegisterPage implements Screen {
 
@@ -9,10 +8,10 @@ public class RegisterPage implements Screen {
     public final Integer HEIGHT = 550;
 
     Button registerButton;
-    JTextField fullNameField;
-    JTextField usernameField;
-    JTextField passwordField;
-    JTextField confirmPasswordField;
+    TextField fullNameField;
+    TextField usernameField;
+    TextField passwordField;
+    TextField confirmPasswordField;
     Label fullNameLabel;
     Label usernameLabel;
     Label passwordLabel;
@@ -32,6 +31,7 @@ public class RegisterPage implements Screen {
     }
     
     public RegisterPage() {
+        //TODO: Validation for registering.
         registerButton = new Button("Register")
         .bounds(50, 425, 200, 50)
         .actionListener(new ActionListener()
@@ -54,20 +54,18 @@ public class RegisterPage implements Screen {
 
         confirmPasswordLabel = new Label("Confirm Password:").big()
         .bounds(50, 300, 200, 50);
-
-        fullNameField = new JTextField("");
-        usernameField = new JTextField("");
-        passwordField = new JTextField("");
-        confirmPasswordField = new JTextField("");
-
-
-        fullNameField.setBounds(50, 50, 200, 50);
         
-        usernameField.setBounds(50, 150, 200, 50);
+        fullNameField = new TextField("")
+        .bounds(50, 50, 200, 50);
         
-        passwordField.setBounds(50, 250, 200, 50);
+        usernameField = new TextField("")
+        .bounds(50, 150, 200, 50);
         
-        confirmPasswordField.setBounds(50, 350, 200, 50);
+        passwordField = new TextField("")
+        .bounds(50, 250, 200, 50);
+        
+        confirmPasswordField = new TextField("")
+        .bounds(50, 350, 200, 50);
     }
 
     @Override

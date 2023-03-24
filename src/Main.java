@@ -1,7 +1,6 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -10,9 +9,6 @@ import javax.swing.*;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Pattern;
-
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
     
@@ -41,9 +37,19 @@ public class Main {
         public void windowOpened(WindowEvent arg0) {}
     };
 
+    public static void showErrorMessage(String text) {
+        Label textLabel = new Label(text).fgColour(Theme.PRIMARY_FG);
+        JOptionPane.showMessageDialog(null,textLabel);
+    }
+
     public static void main(String[] args) {
+        UIManager.put("OptionPane.background", Theme.PRIMARY_BG);
+        UIManager.put("Panel.background", Theme.PRIMARY_BG);
+
         readFile();
         readInPosts();
+        mainWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
+        popupWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
         setMainScreen(mainScreen); 
         mainWindow.setSize(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT); 
         mainWindow.setLayout(null);//using no layout managers  
@@ -95,7 +101,7 @@ public class Main {
         }
         if(!success) {
             hidePopup();            
-            showMessageDialog(null, "Invalid Username/Password!");
+            showErrorMessage("Invalid Username/Password!");
             return;
         }
         setMainScreen(new HomePage(currentUser));
@@ -157,6 +163,7 @@ public class Main {
             writer.write(numberOfPosts.toString() + '\n');
             for (Post post : allPosts) {
                 writer.write(post.toString());
+                writer.write("\n");
             }
             writer.close();
         }catch(IOException e){
@@ -181,6 +188,7 @@ public class Main {
                 String title = scan.nextLine();
                 String content = scan.next();
                 allPosts.add(new Post(posterId, likedBy, title, content));
+                scan.nextLine();
                 count--;
             }
             scan.close();

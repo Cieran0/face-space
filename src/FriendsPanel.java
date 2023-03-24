@@ -7,8 +7,6 @@ import java.awt.Color;
 public class FriendsPanel extends JPanel {
 
     private boolean isCurrentUser;
-    public Color foregroundColour;
-    public Color backgroundColour;
 
     void reload(Set<Long> friendIDs) {
         this.removeAll();
@@ -125,12 +123,10 @@ public class FriendsPanel extends JPanel {
         this.repaint();
     }
 
-    FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs, Color foregroundColour, Color backgroundColour){
+    FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs){
         super(null);
         this.isCurrentUser=isCurrentUser;
-        this.foregroundColour=foregroundColour;
-        this.backgroundColour=backgroundColour;
-        this.setBackground(backgroundColour);
+        this.setBackground(Theme.SECONDARY_BG);
         reload(friendIDs);
     }
 }

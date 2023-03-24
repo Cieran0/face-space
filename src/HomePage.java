@@ -12,13 +12,13 @@ public class HomePage implements Screen{
         this.isCurrentUser = profile.equals(Main.currentUser);
         this.profile = profile;
 
-        this.friendsPanel = new FriendsPanel(isCurrentUser, profile.getFriends(),Theme.SECONDARY_FG,Theme.SECONDARY_BG);
+        this.friendsPanel = new FriendsPanel(isCurrentUser, profile.getFriends());
         this.friendsPanel.setBounds(Main.MAIN_WINDOW_WIDTH-300, 0, 300, Main.MAIN_WINDOW_HEIGHT);
 
-        this.detailsPanel = new DetailsPanel(profile,Theme.SECONDARY_FG,Theme.SECONDARY_BG);
+        this.detailsPanel = new DetailsPanel(profile);
         this.detailsPanel.setBounds(0, 0, 300, Main.MAIN_WINDOW_HEIGHT);
 
-        this.postsPanel = new PostsPanel(profile, Theme.SECONDARY_FG,Theme.PRIMARY_BG);
+        this.postsPanel = new PostsPanel(profile);
         this.postsPanel.setBounds(300,0,680,Main.MAIN_WINDOW_HEIGHT);
     }
 
@@ -40,7 +40,7 @@ public class HomePage implements Screen{
     }
 
     public void reloadPosts() {
-        this.postsPanel = new PostsPanel(profile, Theme.SECONDARY_FG,Theme.PRIMARY_BG);
+        this.postsPanel = new PostsPanel(profile);
         this.postsPanel.setBounds(300,0,680,Main.MAIN_WINDOW_HEIGHT);
         this.postsPanel.reloadPosts(profile, 0,0);
         Main.setMainScreen(this);

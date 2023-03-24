@@ -1,5 +1,10 @@
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.Border;
+
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -8,11 +13,36 @@ import java.awt.Point;
 
 public class Button extends JButton {
     
+    private static final Border NORMAL_BORDER = BorderFactory.createLineBorder(Theme.BUTTON_TEXT);
+    private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Theme.BUTTON_SELECTED);
+
     public Button(String text){
         super(text);
         setContentAreaFilled(false);
         setFocusPainted(false);
+        setRolloverEnabled(false);
+        border(NORMAL_BORDER);
+        addMouseListener(new MouseListener()
+            {
+                public void mouseClicked(MouseEvent arg0) {}
+                public void mousePressed(MouseEvent arg0) {}
+                public void mouseReleased(MouseEvent arg0) {}
+                public void mouseEntered(MouseEvent arg0) {
+                    border(SELECTED_BORDER);
+                    fgColour(Theme.BUTTON_SELECTED);
+                }
+                public void mouseExited(MouseEvent arg0) {
+                    border(NORMAL_BORDER);
+                    fgColour(Theme.BUTTON_TEXT);
+                }
+            }
+        );
         fgColour(Theme.BUTTON_TEXT);
+    }
+    
+    public Button border(Border border) {
+        this.setBorder(border);
+        return this;
     }
 
     public Button bounds(int x, int y, int width, int height) {

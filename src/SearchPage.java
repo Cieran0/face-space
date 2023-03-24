@@ -1,15 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.JTextField;
 
 public class SearchPage implements Screen{
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 310;
 
     Label searchLabel;
-    JTextField searchField;
+    TextField searchField;
     Button searchButton;
 
     public void addComponents(JFrame frame){
@@ -29,7 +27,7 @@ public class SearchPage implements Screen{
 
                     searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
                     if(searchedUser == null) {
-                        showMessageDialog(null, "User not found");
+                        Main.showErrorMessage("User not found");
                         return;
                     }
 
@@ -51,8 +49,8 @@ public class SearchPage implements Screen{
         .bigger()
         .bounds(50,0,200,50);
 
-        searchField = new JTextField();
-        searchField.setBounds(50,50,200,50);
+        searchField = new TextField("")
+        .bounds(50,50,200,50);
     }
 
     @Override

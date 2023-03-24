@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -16,8 +15,6 @@ import javax.swing.border.Border;
 
 public class PostsPanel extends JPanel {
 
-    public Color foregroundColour;
-    public Color backgroundColour;
     public JPanel posts;
     public JScrollBar scrollBar;
 
@@ -72,27 +69,37 @@ public class PostsPanel extends JPanel {
         int yOffset = (scrollInterval > 0)? (scrollInterval*scrollValue)/100 : 0;
 
         int i = 0;
-        Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+        Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
         while(!filteredPosts.isEmpty()) {
             Post post = filteredPosts.pop();
             JTextArea content = new JTextArea(post.getContent());
 
             Label title = new Label(post.getTitle(),SwingConstants.CENTER)
             .big()
-            .bounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30);
+            .bgColour(Theme.ACCENT_BG)
+            .bright()
+            .bounds(25, 10 + i*POST_HEIGHT - yOffset, 630, 30)
+            .border(border);
 
             Label postedBy = new Label("Posted by: " + Main.users.searchTree(post.getPosterId()).getFullName())
-            .bounds(25, 310 + i*POST_HEIGHT - yOffset, 310, 30);
+            .bgColour(Theme.ACCENT_BG)
+            .bright()
+            .bounds(25, 310 + i*POST_HEIGHT - yOffset, 310, 30)
+            .border(border);
 
             Label likes = new Label("Likes: " + post.getLikeCount())
-            .bounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30);
+            .bgColour(Theme.ACCENT_BG)
+            .bright()
+            .bounds(345, 310 + i*POST_HEIGHT - yOffset, 155, 30)
+            .border(border);
             
-            title.setBorder(blackBorder);
             content.setBounds(25, 50 + i*POST_HEIGHT - yOffset, 630, 250);
-            content.setBorder(blackBorder);
+            content.setBorder(border);
             content.setEditable(false);
-            postedBy.setBorder(blackBorder);
-            likes.setBorder(blackBorder);
+            content.setBackground(Theme.ACCENT_BG);
+            content.setForeground(Theme.SECONDARY_FG);
+            content.setFont(content.getFont().deriveFont(16f));
+            content.setLineWrap(true);
 
             Button likeButton = new Button((post.isLikedBy(Main.currentUser.getId()))? "Unlike" : "Like")
             .bounds(505, 310 + i*POST_HEIGHT - yOffset, 150, 30)
@@ -123,6 +130,7 @@ public class PostsPanel extends JPanel {
         posts.setBounds(0,50,680,Main.MAIN_WINDOW_HEIGHT-50);
         scrollBar.setBounds(660, 0, 20, Main.MAIN_WINDOW_HEIGHT-50);
         posts.add(scrollBar);
+        posts.setBackground(Theme.PRIMARY_BG);
 
         String[] choices = profile.isCurrentUser()? 
             new String[]{
@@ -147,7 +155,7 @@ public class PostsPanel extends JPanel {
             }
         });
 
-        postsFilter.setBounds(40, 20, 600, 25);
+        postsFilter.setBounds(40, 15, 600, 25);
 
         scrollBar.addAdjustmentListener(new AdjustmentListener(){
 
@@ -174,11 +182,9 @@ public class PostsPanel extends JPanel {
         this.repaint();
     }
 
-    public PostsPanel(User profile, Color foregroundColour, Color backgroundColour) {
+    public PostsPanel(User profile) {
         super(null);
-        this.foregroundColour=foregroundColour;
-        this.backgroundColour=backgroundColour;
-        this.setBackground(backgroundColour);
+        this.setBackground(Theme.ACCENT_BG);
         reload(profile,0);
     }
 

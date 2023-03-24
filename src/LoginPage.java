@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class LoginPage implements Screen {
 
@@ -9,8 +8,8 @@ public class LoginPage implements Screen {
     public final Integer HEIGHT = 400;
 
     Button loginButton;
-    JTextField usernameField;
-    JTextField passwordField;
+    TextField usernameField;
+    TextField passwordField;
     Label usernameLabel;
     Label passwordLabel;
 
@@ -38,10 +37,12 @@ public class LoginPage implements Screen {
         passwordLabel = new Label("Password:").big()
         .bounds(50, 100, 200, 50);
 
-        usernameField = new JTextField("");
-        passwordField = new JTextField("");
-        usernameField.setBounds(50, 50, 200, 50);
-        passwordField.setBounds(50, 150, 200, 50);
+        usernameField = new TextField("")
+        .bounds(50, 50, 200, 50);
+
+        passwordField = new TextField("")
+        .bounds(50, 150, 200, 50);
+
         loginButton.setBounds(50, 225, 200, 50);
     }
 
