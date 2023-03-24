@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -145,4 +147,27 @@ public class User {
     public void removeFriend(long id) {
         this.friendIDs.remove(id);
         Main.users.searchTree(id).friendIDs.remove(this.id);
-    }}
+    }
+
+    public static void sortAscending(User[] toSort) {
+        Arrays.sort(toSort, new Comparator<User>() {
+            public int compare(User a, User b)
+            {
+                return a.fullName.compareTo(b.fullName);
+            }
+        }
+        );
+    }
+
+    public static void sortDescending(User[] toSort) {
+        Arrays.sort(toSort, new Comparator<User>() {
+            public int compare(User a, User b)
+            {
+                return b.fullName.compareTo(a.fullName);
+            }
+        }
+        ); 
+    }  
+
+
+}

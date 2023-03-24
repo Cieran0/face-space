@@ -65,9 +65,15 @@ public class PeopleListPage implements Screen {
         int scrollInterval = (totalHeight - (peoplePanel.getBounds().height));
         int yOffset = (scrollInterval > 0)? (scrollInterval*scrollValue)/100 : 0;
 
-        int i = 0;
-        while(!filteredPeople.isEmpty()) {
-            User person = filteredPeople.pop();
+        User[] sortedPeople = filteredPeople.toArray(new User[peopleCount]);
+        if(selectedSortID == 0) {
+            User.sortAscending(sortedPeople);
+        } else {
+            User.sortDescending(sortedPeople);
+        }
+
+        for (int i = 0; i < sortedPeople.length; i++) {
+            User person = sortedPeople[i];
             Label name = new Label(person.getFullName())
             .bounds(25, 10 + i*PERSON_HEIGHT - yOffset, WIDTH-50, 20)
             .bright();
@@ -99,7 +105,6 @@ public class PeopleListPage implements Screen {
             }
             peoplePanel.add(viewProfileButton);
             peoplePanel.add(name);
-            i++;
         }
         peoplePanel.revalidate();
         peoplePanel.repaint();
@@ -149,7 +154,8 @@ public class PeopleListPage implements Screen {
         sortComboBox.setBounds(185,40,150,25);
         sortComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event){
-                JComboBox cb = (JComboBox) event.getSource();
+                @SuppressWarnings("unchecked")
+                JComboBox<String> cb = (JComboBox<String>) event.getSource();
                 Object selected = cb.getSelectedItem();
                 for(int i = 0; i < sortOptions.length;i++){
                     if(selected.equals(sortOptions[i])){
