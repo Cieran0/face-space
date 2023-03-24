@@ -10,6 +10,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 public class Button extends JButton {
     
@@ -50,6 +51,11 @@ public class Button extends JButton {
         return this;
     }
 
+    public Button bounds(Rectangle r) {
+        this.setBounds(r);
+        return this;
+    }
+
     public Button actionListener(ActionListener al) {
         this.addActionListener(al);
         return this;
@@ -76,5 +82,25 @@ public class Button extends JButton {
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.dispose();
         super.paintComponent(g);
+    }
+
+    public Button setHeight(int height) {
+        this.setBounds(getX(), getY(), getWidth(), height);
+        return this;
+    }
+
+    public Button setWidth(int width) {
+        this.setBounds(getX(), getY(), width, getHeight());
+        return this;
+    }
+
+    public Button setX(int x) {
+        this.setBounds(x, getY(), getWidth(), getHeight());
+        return this;
+    }
+
+    public Button setY(int y) {
+        this.setBounds(getX(), y, getWidth(), getHeight());
+        return this;
     }
 }

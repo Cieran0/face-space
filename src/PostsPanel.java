@@ -26,8 +26,10 @@ public class PostsPanel extends JPanel {
         int trueSelectedId = (profile.isCurrentUser()? selectedId : selectedId+1);
         for (Post post : Main.allPosts) {
             switch(trueSelectedId) {
-                // TODO: add liked posts to the feed and a selector for it.
                 case 0:
+                    if(post.getLikedBy().contains(Main.currentUser.getId())) {
+                        filteredPosts.add(post);
+                    }
                 case 1:
                     if(post.getPosterId() == profile.getId()) {
                         filteredPosts.add(post);
@@ -112,6 +114,21 @@ public class PostsPanel extends JPanel {
                 }
             );
 
+            if(post.getLikeCount() > 0) {
+                likeButton.setWidth(75);
+                Button showLikes = new Button("Show")
+                .bounds(likeButton.getBounds())
+                .setX(580)
+                .actionListener(new ActionListener() 
+                {
+                    public void actionPerformed(ActionEvent arg0){
+                        Main.setPopupScreen(new PeopleListPage(true, post.getLikedBy()));
+                    }
+                }
+                );
+                posts.add(showLikes);
+            }
+
             posts.add(title);
             posts.add(content);
             posts.add(postedBy);
@@ -144,7 +161,8 @@ public class PostsPanel extends JPanel {
         postsFilter.setSelectedIndex(selectedId);
         postsFilter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JComboBox comboBox = (JComboBox) event.getSource();
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) event.getSource();
                 Object selected = comboBox.getSelectedItem();
                 for (int i = 0; i < choices.length; i++) {
                     if(selected.equals(choices[i]))

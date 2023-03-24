@@ -2,7 +2,6 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
-import java.awt.Color;
 
 public class FriendsPanel extends JPanel {
 
@@ -25,17 +24,17 @@ public class FriendsPanel extends JPanel {
 
         Label yourFriendsLabel = new Label((isCurrentUser) ? "Your Friends: " : "Their Friends: ")
         .bright()
-        .bounds(50, 100 , 200, 50);
+        .bounds(50, 60 , 200, 50);
 
         this.add(yourFriendsLabel);
         int i = 1;
         for (Long friendID : friendIDs) {
-            if(i > 3){
+            if(i > 4){
                 break;
             }
             User currentFriend = Main.users.searchTree(friendID);
             Button viewProfile = new Button("View Profile")
-            .bounds(50, (i*50)+125, 200, 25)
+            .bounds(50, (i*50)+75, 200, 25)
             .actionListener(new ActionListener()
                 {
                     public void actionPerformed(ActionEvent arg0) {
@@ -45,13 +44,16 @@ public class FriendsPanel extends JPanel {
             );
 
             if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(friendID)){
-                viewProfile.setBounds(50,(i*50)+125,125,25);
+                viewProfile.setBounds(50,(i*50)+75,125,25);
                 Button addFriendButton = new Button("Add")
-                .bounds(175,(i*50)+125,75,25)
+                .bounds(175,(i*50)+75,75,25)
                 .actionListener(new ActionListener() 
                     {
                         public void actionPerformed(ActionEvent arg0){
                             Main.currentUser.addFriend(friendID);
+                            if(Main.mainScreen instanceof HomePage) {
+                                ((HomePage)Main.mainScreen).reloadPosts();
+                            }
                             reload(friendIDs);
                         }
                     }
@@ -61,7 +63,7 @@ public class FriendsPanel extends JPanel {
 
                 User friend = Main.users.searchTree(friendID);
                 Label friendName = new Label(friend.getFullName())
-                .bounds(50, (i*50)+100, 200, 25)
+                .bounds(50, (i*50)+50, 200, 25)
                 .bright();
 
                 this.add(friendName);
@@ -81,11 +83,14 @@ public class FriendsPanel extends JPanel {
         
         if (isCurrentUser){
             i=1;
-            Label reccomendedFriendsLabel = new Label("Recommended friends: ")
+            Label reccomendedFriendsLabel = new Label("Recommended Friends: ")
             .bounds(50, 400 , 300, 50)
             .bright();
 
             for (long friendID : Main.currentUser.recommendFriends()) {
+                if(i > 5){
+                    break;
+                }
                 User currentFriend = Main.users.searchTree(friendID);
                 Button viewProfile = new Button("View Profile")
                 .actionListener(new ActionListener()
@@ -103,6 +108,9 @@ public class FriendsPanel extends JPanel {
                     {
                         public void actionPerformed(ActionEvent arg0){
                             Main.currentUser.addFriend(friendID);
+                            if(Main.mainScreen instanceof HomePage) {
+                                ((HomePage)Main.mainScreen).reloadPosts();
+                            }
                             reload(friendIDs);
                         }
                     }

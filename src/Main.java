@@ -48,6 +48,7 @@ public class Main {
 
         readFile();
         readInPosts();
+
         mainWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
         popupWindow.getContentPane().setBackground(Theme.PRIMARY_BG);
         setMainScreen(mainScreen); 

@@ -121,18 +121,19 @@ public class PeopleListPage implements Screen {
         scrollBar.setBounds(WIDTH-20, 0, 20, HEIGHT-75);
         reloadFriendsList(0);
 
-        filterLabel = new Label("Filter:").big()
-        .bounds(50,0,100,30);
+        filterLabel = new Label("Filter:",SwingConstants.CENTER).big()
+        .bounds(50,10,100,30);
 
-        sortLabel = new Label("Sort:")
-        .bounds(210,0,100,30);
+        sortLabel = new Label("Sort:",SwingConstants.CENTER).big()
+        .bounds(210,10,100,30);
 
         filterComboBox = new JComboBox<String>(filterOptions);
         filterComboBox.setSelectedIndex(selectedFiterID);
         filterComboBox.setBounds(25,40,150,25);
         filterComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event){
-                JComboBox cb = (JComboBox) event.getSource();
+                @SuppressWarnings("unchecked")
+                JComboBox<String> cb = (JComboBox<String>) event.getSource();
                 Object selected = cb.getSelectedItem();
                 for(int i = 0; i < filterOptions.length; i++){
                     if(selected.equals(filterOptions[i])){

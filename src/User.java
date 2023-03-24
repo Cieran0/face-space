@@ -141,4 +141,8 @@ public class User {
         }
         return false;
     }
-}
+    
+    public void removeFriend(long id) {
+        this.friendIDs.remove(id);
+        Main.users.searchTree(id).friendIDs.remove(this.id);
+    }}

@@ -44,18 +44,37 @@ public class DetailsPanel extends JPanel {
             this.add(newPostButton);
         }
 
-        else if(!profile.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(profile.getId())){
-            Button addFriendButton = new Button("Add Friend")
+        else if(!profile.equals(Main.currentUser)){
+            Button toggleFriendButton = new Button(
+                (Main.currentUser.isFriendsWith(profile)) ?
+                "Remove Friend" : "Add Friend"
+            )
             .bounds(100,210,100,50)
             .actionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent arg0){
-                    Main.currentUser.addFriend(profile.getId());
+                    if (Main.currentUser.isFriendsWith(profile)) 
+                    {
+                        Main.currentUser.removeFriend(profile.getId());
+                    } else {
+                        Main.currentUser.addFriend(profile.getId());
+                    }
                     Main.setMainScreen(new HomePage(profile));
                 }
             });
             
-            this.add(addFriendButton);
+            Button homeButton = new Button("Home")
+            .bounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setMainScreen(new HomePage(Main.currentUser));
+                    }
+                }
+            );
+
+            this.add(homeButton);
+            this.add(toggleFriendButton);
         }
 
         Button logout = new Button("Logout")
