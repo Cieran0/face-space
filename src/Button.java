@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +17,18 @@ public class Button extends JButton {
     
     private static final Border NORMAL_BORDER = BorderFactory.createLineBorder(Theme.BUTTON_TEXT);
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Theme.BUTTON_SELECTED);
+    private boolean zeroWidth = false;
+
+    public Button(boolean zeroWidth) {
+        this.zeroWidth = zeroWidth;
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        if(zeroWidth)
+            return new Dimension();
+        return super.getPreferredSize();
+    }
 
     public Button(String text){
         super(text);

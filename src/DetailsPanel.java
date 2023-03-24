@@ -1,23 +1,41 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class DetailsPanel extends JPanel {
     
     public void reload(User profile) {
         this.removeAll();
 
-        Label[] details = new Label[4];
-        details[0] = new Label(profile.getFullName());
-        details[1] = new Label("@" + profile.getUsername());
-        details[2] = new Label("Workplace: " + profile.getWorkPlace());
-        details[3] = new Label("Hometown: " + profile.getHomeTown());
+        Label fullName = new Label(profile.getFullName(),SwingConstants.CENTER)
+        .big()
+        .bright()
+        .bounds(0, 0,300,50);
 
-        for (int i = 0; i < details.length; i++) {
-            details[i].bright();
-            details[i].setBounds(0, i*50, 200, 20);
-            this.add(details[i]);
-        }
+        Label username = new Label("@" + profile.getUsername(),SwingConstants.CENTER)
+        .fontSize(14)
+        .bright()
+        .bounds(0, 20,300,50);
+
+        Label workPlace = new Label("Workplace: " + profile.getWorkPlace())
+        .bright()
+        .bounds(0, 50,300,50);
+        boolean showWorkPlace = !(profile.getWorkPlace().toLowerCase().equals("hidden"));
+
+        Label HomeTown = new Label("Hometown: " + profile.getHomeTown())
+        .bright()
+        .bounds(0, 50 + ((showWorkPlace)? 25 : 0),300,50);
+        boolean showHomeTown = !(profile.getHomeTown().toLowerCase().equals("hidden"));
+
+
+        this.add(fullName);
+        this.add(username);
+        if(showWorkPlace)
+            this.add(workPlace);
+        if(showHomeTown)
+            this.add(HomeTown);
+
         if(profile.equals(Main.currentUser)){
             Button detailsButton = new Button("Edit Details")
             .bounds(100,210,100,50)

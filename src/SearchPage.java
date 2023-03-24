@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JFrame;
 
 public class SearchPage implements Screen{
@@ -23,24 +26,22 @@ public class SearchPage implements Screen{
         .actionListener(new ActionListener() 
             {
                 public void actionPerformed(ActionEvent arg0){
-                    User searchedUser;
+                    Set<Long> foundUsers = new HashSet<Long>();
+                    String searchTerm = searchField.getText().toLowerCase();
 
-                    searchedUser = Main.users.searchTree(Hash.hash(searchField.getText()));
-                    if(searchedUser == null) {
-                        Main.showErrorMessage("User not found");
+                    for (User user : Main.users.asList()) {
+                        String name = user.getFullName().toLowerCase();
+                        String username = user.getUsername().toLowerCase();
+                        if(name.contains(searchTerm) || name.equals(searchTerm) || username.contains(searchTerm) || username.equals(searchTerm)) {
+                            foundUsers.add(user.getId());
+                        }
+                    }
+                    if(foundUsers.size() == 0) {
+                        Main.hidePopup();
+                        Main.showErrorMessage("No users found");
                         return;
                     }
-
-                    for(User user : Main.users.asList()){
-                        if(searchedUser.getFullName().equals(user.getFullName())){
-                            Main.hidePopup();
-                            Main.setMainScreen(new HomePage(searchedUser));
-                        }
-                        else if(searchedUser.getUsername().equals(user.getUsername())){
-                            Main.hidePopup();
-                            Main.setMainScreen(new HomePage(searchedUser));
-                        }
-                    }
+                    Main.setPopupScreen(new PeopleListPage(true, foundUsers));
                 }
             }
         );

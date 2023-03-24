@@ -10,6 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 public class PeopleListPage implements Screen {
@@ -29,6 +34,7 @@ public class PeopleListPage implements Screen {
     boolean isCurrentUser;
     int selectedFiterID; 
     int selectedSortID;
+    Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
 
     public void addComponents(JFrame frame){
         frame.add(filterLabel);
@@ -98,6 +104,9 @@ public class PeopleListPage implements Screen {
                         public void actionPerformed(ActionEvent arg0) {
                             Main.currentUser.addFriend(person.getId());
                             reloadFriendsList(scrollValue);
+                            if(Main.mainScreen instanceof HomePage) {
+                                ((HomePage)Main.mainScreen).reloadFriends();
+                            }
                         }
                     }
                 );
@@ -124,13 +133,32 @@ public class PeopleListPage implements Screen {
 
         scrollBar = new JScrollBar(SwingConstants.VERTICAL,0,10,0,110);
         scrollBar.setBounds(WIDTH-20, 0, 20, HEIGHT-75);
+        scrollBar.setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbDarkShadowColor = Theme.ACCENT_BG.darker();
+                this.thumbHighlightColor = Theme.ACCENT_BG.brighter();
+                this.trackColor = Theme.SECONDARY_BG.brighter();
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return new Button(true);
+            }
+
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return new Button(true);
+            }
+        });
+
         reloadFriendsList(0);
 
         filterLabel = new Label("Filter:",SwingConstants.CENTER).big()
-        .bounds(50,10,100,30);
+        .bounds(25,10,150,30);
 
         sortLabel = new Label("Sort:",SwingConstants.CENTER).big()
-        .bounds(210,10,100,30);
+        .bounds(WIDTH-175,10,150,30);
 
         filterComboBox = new JComboBox<String>(filterOptions);
         filterComboBox.setSelectedIndex(selectedFiterID);
@@ -148,10 +176,24 @@ public class PeopleListPage implements Screen {
                 }
             }
         });
-
+        filterComboBox.setUI(new BasicComboBoxUI(){
+            @Override
+            public void configureArrowButton() {
+                super.configureArrowButton();
+                this.arrowButton.setBackground(Theme.SECONDARY_BG);
+                this.arrowButton.setForeground(Theme.SECONDARY_FG);
+                this.arrowButton.setBorder(border);
+                this.listBox.setBackground(Theme.SECONDARY_BG);
+                this.listBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBackground(Theme.SECONDARY_BG);
+                this.comboBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBorder(border);
+            }
+        });
+        
         sortComboBox = new JComboBox<String>(sortOptions);
         sortComboBox.setSelectedIndex(selectedSortID);
-        sortComboBox.setBounds(185,40,150,25);
+        sortComboBox.setBounds(WIDTH-175,40,150,25);
         sortComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event){
                 @SuppressWarnings("unchecked")
@@ -163,6 +205,20 @@ public class PeopleListPage implements Screen {
                         reloadFriendsList(0);
                     }
                 }
+            }
+        });
+        sortComboBox.setUI(new BasicComboBoxUI(){
+            @Override
+            public void configureArrowButton() {
+                super.configureArrowButton();
+                this.arrowButton.setBackground(Theme.SECONDARY_BG);
+                this.arrowButton.setForeground(Theme.SECONDARY_FG);
+                this.arrowButton.setBorder(border);
+                this.listBox.setBackground(Theme.SECONDARY_BG);
+                this.listBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBackground(Theme.SECONDARY_BG);
+                this.comboBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBorder(border);
             }
         });
 

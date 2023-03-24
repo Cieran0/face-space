@@ -11,7 +11,7 @@ public class FriendsPanel extends JPanel {
         this.removeAll();
 
         Button searchButton = new Button("Search").
-        bounds(50,20,100,50).
+        bounds(50,20,200,50).
         actionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent arg0) {

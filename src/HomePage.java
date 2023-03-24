@@ -46,4 +46,10 @@ public class HomePage implements Screen{
         Main.setMainScreen(this);
     }
 
+    public void reloadFriends() {
+        this.friendsPanel = new FriendsPanel(isCurrentUser, profile.getFriends());
+        this.friendsPanel.setBounds(Main.MAIN_WINDOW_WIDTH-300, 0, 300, Main.MAIN_WINDOW_HEIGHT);
+        Main.setMainScreen(this);
+    }
+
 }
