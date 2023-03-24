@@ -121,7 +121,7 @@ public class Main {
         List<User> userList = users.asList(); 
         int numberOfUsers = userList.size();
         try{
-            FileWriter writer = new FileWriter("accounts.txt");
+            FileWriter writer = new FileWriter("database.txt");
             writer.write(numberOfUsers + "\n");
             for (User user : userList) {
                 writer.write(user.toString());
@@ -145,7 +145,7 @@ public class Main {
     public static void readFile(){
         int noFriends = 0;
         try{
-            File f = new File("accounts.txt");
+            File f = new File("database.txt");
             Scanner scRead = new Scanner(f);
             int numberOfUsers = Integer.parseInt(scRead.nextLine());
             for (int i = 0; i < numberOfUsers; i++) {
