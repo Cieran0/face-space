@@ -1,88 +1,126 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class DetailsPanel extends JPanel {
-
-    public Color foregroundColour;
-    public Color backgroundColour;
-
-    //public JButton detailsButton;
     
+    /** 
+     * Reloads the details panel.
+     * @param profile The User who's page is being viewed.
+     */
     public void reload(User profile) {
         this.removeAll();
 
-        JLabel[] details = new JLabel[4];
-        details[0] = new JLabel(profile.getFullName());
-        details[1] = new JLabel("@" + profile.getUsername());
-        details[2] = new JLabel("Workplace: " + profile.getWorkPlace());
-        details[3] = new JLabel("Hometown: " + profile.getHomeTown());
+        Label fullName = new Label(profile.getFullName(),SwingConstants.CENTER)
+        .big()
+        .bright()
+        .bounds(0, 0,300,50);
 
-        for (int i = 0; i < details.length; i++) {
-            details[i].setForeground(foregroundColour);
-            details[i].setBounds(0, i*50, 200, 20);
-            this.add(details[i]);
-        }
+        Label username = new Label("@" + profile.getUsername(),SwingConstants.CENTER)
+        .fontSize(14)
+        .bright()
+        .bounds(0, 20,300,50);
+
+        Label workPlace = new Label("Workplace: " + profile.getWorkPlace())
+        .bright()
+        .bounds(0, 50,300,50);
+        boolean showWorkPlace = !(profile.getWorkPlace().toLowerCase().equals("hidden"));
+
+        Label HomeTown = new Label("Hometown: " + profile.getHomeTown())
+        .bright()
+        .bounds(0, 50 + ((showWorkPlace)? 25 : 0),300,50);
+        boolean showHomeTown = !(profile.getHomeTown().toLowerCase().equals("hidden"));
+
+
+        this.add(fullName);
+        this.add(username);
+        if(showWorkPlace)
+            this.add(workPlace);
+        if(showHomeTown)
+            this.add(HomeTown);
+
         if(profile.equals(Main.currentUser)){
-            JButton detailsButton = new JButton("Edit Details");
-            detailsButton.setBounds(100,210,100,50);
-            detailsButton.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    Main.setPopupScreen(new EditDetailsPage());
+            Button detailsButton = new Button("Edit Details")
+            .bounds(100,210,100,50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setPopupScreen(new EditDetailsPage());
+                    }
                 }
-            }
             );
+
             this.add(detailsButton);
 
-            JButton newPostButton = new JButton("New Post");
-            newPostButton.setBounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
-            newPostButton.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    Main.setPopupScreen(new NewPostPopup());
+            Button newPostButton = new Button("New Post")
+            .bounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setPopupScreen(new NewPostPopup());
+                    }
                 }
-            }
             );
+
             this.add(newPostButton);
         }
 
-        else if(!profile.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(profile.getId())){
-            JButton addFriendButton = new JButton("Add Friend");
-            addFriendButton.setBounds(100,210,100,50);
-            addFriendButton.addActionListener(new ActionListener(){
-                @Override
+        else if(!profile.equals(Main.currentUser)){
+            Button toggleFriendButton = new Button(
+                (Main.currentUser.isFriendsWith(profile)) ?
+                "Remove Friend" : "Add Friend"
+            )
+            .bounds(100,210,100,50)
+            .actionListener(new ActionListener()
+            {
                 public void actionPerformed(ActionEvent arg0){
-                    Main.currentUser.addFriend(profile.getId());
+                    if (Main.currentUser.isFriendsWith(profile)) 
+                    {
+                        Main.currentUser.removeFriend(profile.getId());
+                    } else {
+                        Main.currentUser.addFriend(profile.getId());
+                    }
                     Main.setMainScreen(new HomePage(profile));
                 }
             });
-            this.add(addFriendButton);
+            
+            Button homeButton = new Button("Home")
+            .bounds(50, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+            .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setMainScreen(new HomePage(Main.currentUser));
+                    }
+                }
+            );
+
+            this.add(homeButton);
+            this.add(toggleFriendButton);
         }
 
-        JButton logout = new JButton("Logout");
-        logout.setBounds(150, Main.MAIN_WINDOW_HEIGHT-100, 100, 50);
-        logout.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                Main.logout();
+        Button logout = new Button("Logout")
+        .bounds(150, Main.MAIN_WINDOW_HEIGHT-100, 100, 50)
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.logout();
+                }
             }
-        }
         );
+
         this.add(logout);
         this.revalidate();
         this.repaint();
     }
 
-    public DetailsPanel(User profile, Color foregroundColour, Color backgroundColour) {
+    /**
+     * Creates the details panel.
+     * @param profile The User who's page is being viewed.
+     */
+    public DetailsPanel(User profile) {
         super(null);
-        this.foregroundColour=foregroundColour;
-        this.backgroundColour=backgroundColour;
-        this.setBackground(backgroundColour);
+        this.setBackground(Theme.SECONDARY_BG);
         reload(profile);
     }
 

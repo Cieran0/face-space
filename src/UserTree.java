@@ -22,6 +22,10 @@ public class UserTree {
     Node root;
     Set<Long> idSet = new HashSet<Long>();
 
+    
+    /** 
+     * @param user
+     */
     public void insertUser(User user){
 
         if(user == null){
@@ -59,7 +63,13 @@ public class UserTree {
 
     }
 
+    
+    /** 
+     * @param id
+     * @return User
+     */
     public User searchTree(long id){
+        if(root==null) return null;
         Node head = root;
 
         while(head.id != id){
@@ -84,6 +94,10 @@ public class UserTree {
         print(this.root);
     }
 
+    
+    /** 
+     * @param root
+     */
     private void print(Node root){
         if(root == null) {
             return;
@@ -93,6 +107,10 @@ public class UserTree {
         print(root.right);
     }
 
+    
+    /** 
+     * @return List<User>
+     */
     public List<User> asList(){
 
         List<User> newList = new ArrayList<User>();

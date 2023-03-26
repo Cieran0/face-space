@@ -1,119 +1,131 @@
-import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
 
 public class FriendsPanel extends JPanel {
 
     private boolean isCurrentUser;
-    public Color foregroundColour;
-    public Color backgroundColour;
-
+    
+    /** 
+     * Reloads the friends panel.
+     * @param friendIDs Set of the users friends.
+     */
     void reload(Set<Long> friendIDs) {
         this.removeAll();
 
-        JButton searchButton = new JButton("Search");
-        searchButton.setBounds(50,20,100,50);
-        searchButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0){
-                Main.setPopupScreen(new SearchPage());
+        Button searchButton = new Button("Search").
+        bounds(50,20,200,50).
+        actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.setPopupScreen(new SearchPage());
+                }
             }
-        });
+        );
+
         this.add(searchButton);
 
+        Label yourFriendsLabel = new Label((isCurrentUser) ? "Your Friends: " : "Their Friends: ")
+        .bright()
+        .bounds(50, 60 , 200, 50);
 
-        JLabel yourFriendsLabel = new JLabel((isCurrentUser) ? "Your Friends: " : "Their Friends: ");
-        yourFriendsLabel.setBounds(50, 100 , 200, 50);
-        yourFriendsLabel.setForeground(foregroundColour);
         this.add(yourFriendsLabel);
         int i = 1;
         for (Long friendID : friendIDs) {
-            if(i > 3){
+            if(i > 4){
                 break;
             }
             User currentFriend = Main.users.searchTree(friendID);
-            JButton viewProfile = new JButton("View Profile");
-                viewProfile.addActionListener(new ActionListener(){
-                    @Override
+            Button viewProfile = new Button("View Profile")
+            .bounds(50, (i*50)+75, 200, 25)
+            .actionListener(new ActionListener()
+                {
                     public void actionPerformed(ActionEvent arg0) {
                         Main.setMainScreen(new HomePage(Main.users.searchTree(friendID)));
                     }
                 }
-                );
-            if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.getFriends().contains(friendID)){
-                viewProfile.setBounds(50,(i*50)+125,125,25);
-                JButton addFriendButton = new JButton("Add");
-                addFriendButton.setBounds(175,(i*50)+125,75,25);
-                addFriendButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent arg0){
-                        Main.currentUser.addFriend(friendID);
-                        reload(friendIDs);
+            );
+
+            if(!currentFriend.equals(Main.currentUser) && !Main.currentUser.isFriendsWith(friendID)){
+                viewProfile.setBounds(50,(i*50)+75,125,25);
+                Button addFriendButton = new Button("Add")
+                .bounds(175,(i*50)+75,75,25)
+                .actionListener(new ActionListener() 
+                    {
+                        public void actionPerformed(ActionEvent arg0){
+                            Main.currentUser.addFriend(friendID);
+                            if(Main.mainScreen instanceof HomePage) {
+                                ((HomePage)Main.mainScreen).reloadPosts();
+                            }
+                            reload(friendIDs);
+                        }
                     }
-                });
+                );
                 this.add(addFriendButton);
-            }
-            else{
-                viewProfile.setBounds(50, (i*50)+125, 200, 25);
             }
 
                 User friend = Main.users.searchTree(friendID);
-                JLabel friendName = new JLabel(friend.getFullName());
-                friendName.setBounds(50, (i*50)+100, 200, 25);
+                Label friendName = new Label(friend.getFullName())
+                .bounds(50, (i*50)+50, 200, 25)
+                .bright();
+
                 this.add(friendName);
                 this.add(viewProfile);
-                friendName.setForeground(foregroundColour);
                 i++;
         }
         
-        JButton friendsListButton = new JButton("All Friends");
-        friendsListButton.setBounds(50,300,200,50);
-        friendsListButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0){
-                Main.setPopupScreen(new FriendsListPage());
+        Button friendsListButton = new Button("All Friends")
+        .bounds(50,325,200,50)
+        .actionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent arg0){
+                    Main.setPopupScreen(new PeopleListPage(isCurrentUser,friendIDs));
+                }
             }
-        });
+        );
         
         if (isCurrentUser){
             i=1;
-            JLabel reccomendedFriendsLabel = new JLabel("Recommended friends: ");
-            reccomendedFriendsLabel.setBounds(50, 400 , 300, 50);
-            reccomendedFriendsLabel.setForeground(foregroundColour);
+            Label reccomendedFriendsLabel = new Label("Recommended Friends: ")
+            .bounds(50, 400 , 300, 50)
+            .bright();
+
             for (long friendID : Main.currentUser.recommendFriends()) {
+                if(i > 5){
+                    break;
+                }
                 User currentFriend = Main.users.searchTree(friendID);
-                JButton viewProfile = new JButton("View Profile");
-                viewProfile.addActionListener(new ActionListener(){
-                                                  @Override
-                                                  public void actionPerformed(ActionEvent arg0) {
-                                                      Main.setMainScreen(new HomePage(Main.users.searchTree(friendID)));
-                                                  }
-                                              }
+                Button viewProfile = new Button("View Profile")
+                .actionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent arg0) {
+                        Main.setMainScreen(new HomePage(currentFriend));
+                    }
+                }
                 );
 
-                    viewProfile.setBounds(50,(i*50)+425,125,25);
-                    JButton addFriendButton = new JButton("Add");
-                    addFriendButton.setBounds(175,(i*50)+425,75,25);
-                    addFriendButton.addActionListener(new ActionListener() {
-                        @Override
+                viewProfile.setBounds(50,(i*50)+425,125,25);
+                Button addFriendButton = new Button("Add")
+                .bounds(175,(i*50)+425,75,25)
+                .actionListener(new ActionListener() 
+                    {
                         public void actionPerformed(ActionEvent arg0){
                             Main.currentUser.addFriend(friendID);
+                            if(Main.mainScreen instanceof HomePage) {
+                                ((HomePage)Main.mainScreen).reloadPosts();
+                            }
                             reload(friendIDs);
                         }
-                    });
-                    this.add(addFriendButton);
+                    }
+                );
+                this.add(addFriendButton);
 
                 User friend = Main.users.searchTree(friendID);
-                JLabel friendName = new JLabel(friend.getFullName());
-                friendName.setBounds(50, (i*50)+400, 200, 25);
+                Label friendName = new Label(friend.getFullName())
+                .bounds(50, (i*50)+400, 200, 25).bright();
                 this.add(friendName);
                 this.add(viewProfile);
-                friendName.setForeground(foregroundColour);
                 i++;
             }
             this.add(reccomendedFriendsLabel);
@@ -123,12 +135,15 @@ public class FriendsPanel extends JPanel {
         this.repaint();
     }
 
-    FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs, Color foregroundColour, Color backgroundColour){
+    /**
+     * Creates the friends panel
+     * @param isCurrentUser does the page we are viewing belong to the current user?
+     * @param friendIDs Set of the users friends.
+     */
+    FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs){
         super(null);
         this.isCurrentUser=isCurrentUser;
-        this.foregroundColour=foregroundColour;
-        this.backgroundColour=backgroundColour;
-        this.setBackground(backgroundColour);
+        this.setBackground(Theme.SECONDARY_BG);
         reload(friendIDs);
     }
 }

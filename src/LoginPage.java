@@ -1,24 +1,23 @@
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class LoginPage implements Screen {
 
     public final Integer WIDTH = 300;
     public final Integer HEIGHT = 400;
 
-    JButton loginButton;
-    JTextField usernameField;
-    JTextField passwordField;
-    JLabel usernameLabel;
-    JLabel passwordLabel;
+    Button loginButton;
+    TextField usernameField;
+    TextField passwordField;
+    Label usernameLabel;
+    Label passwordLabel;
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame) {
         frame.setLocationRelativeTo(null);
         frame.add(loginButton);
@@ -28,29 +27,46 @@ public class LoginPage implements Screen {
         frame.add(passwordLabel);
     }
     
+    /**
+     * Creates the login page.
+     */
     public LoginPage() {
-        loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0) {
-                Main.login(usernameField.getText(),passwordField.getText());
+        loginButton = new Button("Login")
+        .actionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent arg0) {
+                    Main.login(usernameField.getText(),passwordField.getText());
+                }
             }
-        });
-        usernameLabel = new JLabel("<html><span style='font-size:16px;'>Username:</span></html>");
-        passwordLabel = new JLabel("<html><span style='font-size:16px;'>Password:</span></html>");
-        usernameField = new JTextField("");
-        passwordField = new JTextField("");
-        usernameLabel.setBounds(50, 0, 200, 50);
-        usernameField.setBounds(50, 50, 200, 50);
-        passwordLabel.setBounds(50, 100, 200, 50);
-        passwordField.setBounds(50, 150, 200, 50);
+        );
+        usernameLabel = new Label("Username:").big()
+        .bounds(50, 0, 200, 50);
+
+        passwordLabel = new Label("Password:").big()
+        .bounds(50, 100, 200, 50);
+
+        usernameField = new TextField("")
+        .bounds(50, 50, 200, 50);
+
+        passwordField = new TextField("")
+        .bounds(50, 150, 200, 50);
+
         loginButton.setBounds(50, 225, 200, 50);
     }
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return HEIGHT;
