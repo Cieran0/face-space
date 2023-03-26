@@ -24,7 +24,8 @@ public class UserTree {
 
     
     /** 
-     * @param user
+     * Add a user to the tree.
+     * @param user the user to add.
      */
     public void insertUser(User user){
 
@@ -65,6 +66,7 @@ public class UserTree {
 
     
     /** 
+     * Find the user in a tree from the given id.
      * @param id
      * @return User
      */
@@ -90,26 +92,31 @@ public class UserTree {
         return head.user;
     }
 
+    /** 
+     * Prints the tree
+     */
     public void print() {
         print(this.root);
     }
 
     
     /** 
-     * @param root
+     * Prints the tree
+     * @param root the starting point
      */
     private void print(Node root){
         if(root == null) {
             return;
         }
         print(root.left);
-        //System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
+        System.out.println("ID: " + root.user.getId() + ". " + "Username: " + root.user.getUsername() + " Name: " +root.user.getFullName());
         print(root.right);
     }
 
     
     /** 
-     * @return List<User>
+     * Gets the users in the tree as a list of users.
+     * @return Every user in the tree in a list. 
      */
     public List<User> asList(){
 
