@@ -16,7 +16,7 @@ public class Main {
     
     public static final Integer MAIN_WINDOW_WIDTH = 1280;
     public static final Integer MAIN_WINDOW_HEIGHT = 720;
-    public static JFrame mainWindow = new JFrame("DEBUG");//creating instance of JFrame  
+    public static JFrame mainWindow = new JFrame("DEBUG");
     public static Screen mainScreen = new WelcomePage();
     public static JFrame popupWindow = new JFrame("DEBUG");
     public static Screen popupScreen;
@@ -38,11 +38,19 @@ public class Main {
         public void windowOpened(WindowEvent arg0) {}
     };
 
+    
+    /** 
+     * Shows a popup error message.
+     * @param text Text of the error message.
+     */
     public static void showErrorMessage(String text) {
         Label textLabel = new Label(text).fgColour(Theme.PRIMARY_FG);
         JOptionPane.showMessageDialog(null,textLabel);
     }
 
+    /*
+     * Sets up the application.
+     */
     public static void main(String[] args) {
         UIManager.put("OptionPane.background", Theme.PRIMARY_BG);
         UIManager.put("Panel.background", Theme.PRIMARY_BG);
@@ -59,6 +67,11 @@ public class Main {
         mainWindow.addWindowListener(wl);
     }
 
+    
+    /** 
+     * Sets the popup window to a screen.
+     * @param s Screen to set the popup window to.
+     */
     public static void setPopupScreen(Screen s) {
         clearFrame(popupWindow);
         popupWindow.setBounds(0, 0, s.getWidth(), s.getHeight());
@@ -71,14 +84,26 @@ public class Main {
         popupWindow.setVisible(true);
     }
     
+    /**
+     * Hides the popup window.
+     */
     public static void hidePopup() {
         popupWindow.setVisible(false);
     }
-
+    
+    /** 
+     * Clears a JFrame.
+     * @param frame JFrame to clear.
+     */
     public static void clearFrame(JFrame frame) {
         frame.getContentPane().removeAll();
     }
 
+    
+    /** 
+     * Sets the main window to a screen.
+     * @param s Screen to set the main window to.
+     */
     public static void setMainScreen(Screen s) {
         clearFrame(mainWindow);
         mainWindow.revalidate();
@@ -89,6 +114,11 @@ public class Main {
         mainWindow.repaint();
     }
 
+    
+    /** 
+     * @param username
+     * @param password
+     */
     public static void login(String username, String password) {
         hidePopup();
         boolean success = false;
@@ -113,10 +143,12 @@ public class Main {
         currentUser = null;
     }
 
-    public static Long getUserID(User user) {
-        return user.getId();
-    }
-
+    
+    /** 
+     * Saves data to a file.
+     * @param users Tree of users to save.
+     * @param posts Queue of posts to save.
+     */
     public static void writeToFile(UserTree users, Queue<Post> posts){
         List<User> userList = users.asList(); 
         int numberOfUsers = userList.size();
@@ -142,6 +174,9 @@ public class Main {
         }
     }
 
+    /** 
+     * Reads user and post data from a file.
+     */
     public static void readFile(){
         int noFriends = 0;
         try{

@@ -14,6 +14,11 @@ public class SearchPage implements Screen{
     TextField searchField;
     Button searchButton;
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame){
         frame.setLocationRelativeTo(null);
         frame.add(searchLabel);
@@ -55,11 +60,19 @@ public class SearchPage implements Screen{
         .bounds(50,50,200,50);
     }
 
+    
+    /** 
+     * @return The Page's WIDTH.
+     */
     @Override
     public int getWidth() {
         return WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return HEIGHT;

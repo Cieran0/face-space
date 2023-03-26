@@ -16,6 +16,10 @@ public class EditDetailsPage implements Screen {
     TextField passwordField;
     Button saveDetailsButton;
 
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame){
         frame.setLocationRelativeTo(null);
         frame.add(fullNameLabel);
@@ -29,6 +33,9 @@ public class EditDetailsPage implements Screen {
         frame.add(passwordField);
     }
 
+    /**
+     * Creates the edit details page.
+     */
     public EditDetailsPage(){
         saveDetailsButton = new Button("Save Details")
         .bounds(50, 400, 200, 50)
@@ -80,11 +87,19 @@ public class EditDetailsPage implements Screen {
 
     }
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return HEIGHT;

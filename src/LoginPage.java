@@ -13,6 +13,11 @@ public class LoginPage implements Screen {
     Label usernameLabel;
     Label passwordLabel;
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame) {
         frame.setLocationRelativeTo(null);
         frame.add(loginButton);
@@ -22,6 +27,9 @@ public class LoginPage implements Screen {
         frame.add(passwordLabel);
     }
     
+    /**
+     * Creates the login page.
+     */
     public LoginPage() {
         loginButton = new Button("Login")
         .actionListener(new ActionListener()
@@ -46,11 +54,19 @@ public class LoginPage implements Screen {
         loginButton.setBounds(50, 225, 200, 50);
     }
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return HEIGHT;

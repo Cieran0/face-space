@@ -6,7 +6,11 @@ import javax.swing.JPanel;
 public class FriendsPanel extends JPanel {
 
     private boolean isCurrentUser;
-
+    
+    /** 
+     * Reloads the friends panel.
+     * @param friendIDs Set of the users friends.
+     */
     void reload(Set<Long> friendIDs) {
         this.removeAll();
 
@@ -131,6 +135,11 @@ public class FriendsPanel extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Creates the friends panel
+     * @param isCurrentUser does the page we are viewing belong to the current user?
+     * @param friendIDs Set of the users friends.
+     */
     FriendsPanel(boolean isCurrentUser, Set<Long> friendIDs){
         super(null);
         this.isCurrentUser=isCurrentUser;

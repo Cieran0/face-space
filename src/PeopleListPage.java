@@ -36,6 +36,11 @@ public class PeopleListPage implements Screen {
     int selectedSortID;
     Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame){
         frame.add(filterLabel);
         frame.add(filterComboBox);
@@ -44,7 +49,12 @@ public class PeopleListPage implements Screen {
         frame.add(peoplePanel);
     }
 
-    public void reloadFriendsList(int scrollValue){
+    
+    /** 
+     * Reloads the page, scrolling the object based on the scroll wheel.
+     * @param scrollValue The position of the scrolllwheel (0-100)
+     */
+    public void reloadPeopleList(int scrollValue){
         peoplePanel.removeAll();
         peoplePanel.add(scrollBar);
         scrollBar.setValue(scrollValue);
@@ -103,7 +113,7 @@ public class PeopleListPage implements Screen {
                     {
                         public void actionPerformed(ActionEvent arg0) {
                             Main.currentUser.addFriend(person.getId());
-                            reloadFriendsList(scrollValue);
+                            reloadPeopleList(scrollValue);
                             if(Main.mainScreen instanceof HomePage) {
                                 ((HomePage)Main.mainScreen).reloadFriends();
                             }
@@ -119,6 +129,9 @@ public class PeopleListPage implements Screen {
         peoplePanel.repaint();
     }
 
+    /**
+     * Reloads the page.
+     */
     public void reload(){
         peoplePanel = new JPanel(null);
         peoplePanel.setBounds(0, 75, WIDTH, HEIGHT-75);
@@ -152,7 +165,7 @@ public class PeopleListPage implements Screen {
             }
         });
 
-        reloadFriendsList(0);
+        reloadPeopleList(0);
 
         filterLabel = new Label("Filter:",SwingConstants.CENTER).big()
         .bounds(25,10,150,30);
@@ -171,7 +184,7 @@ public class PeopleListPage implements Screen {
                 for(int i = 0; i < filterOptions.length; i++){
                     if(selected.equals(filterOptions[i])){
                         selectedFiterID=i;
-                        reloadFriendsList(0);
+                        reloadPeopleList(0);
                     }
                 }
             }
@@ -202,7 +215,7 @@ public class PeopleListPage implements Screen {
                 for(int i = 0; i < sortOptions.length;i++){
                     if(selected.equals(sortOptions[i])){
                         selectedSortID=i;
-                        reloadFriendsList(0);
+                        reloadPeopleList(0);
                     }
                 }
             }
@@ -226,11 +239,14 @@ public class PeopleListPage implements Screen {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent arg0){
                 JScrollBar scroll = (JScrollBar)arg0.getSource();
-                reloadFriendsList(scroll.getValue());
+                reloadPeopleList(scroll.getValue());
             }
         });
     }
 
+    /**
+     * Creates a page of people from a list of people.
+     */
     public PeopleListPage(boolean isCurrentUser, Set<Long> people){
         this.people = people;
         this.isCurrentUser = isCurrentUser;
@@ -246,11 +262,19 @@ public class PeopleListPage implements Screen {
         reload();
     }
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return HEIGHT;

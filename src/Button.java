@@ -19,10 +19,18 @@ public class Button extends JButton {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Theme.BUTTON_SELECTED);
     private boolean zeroWidth = false;
 
+    /**
+     * Creates a invisible button.
+     * @param zeroWidth
+     */
     public Button(boolean zeroWidth) {
         this.zeroWidth = zeroWidth;
     }
-
+    
+    /** 
+     * Allows for invisible buttons, needed for scrollbars without buttons. 
+     * @return Dimension
+     */
     @Override
     public Dimension getPreferredSize() {
         if(zeroWidth)
@@ -30,6 +38,10 @@ public class Button extends JButton {
         return super.getPreferredSize();
     }
 
+    /**
+     * Creates a button with.
+     * @param text Text displayed on the button.
+     */
     public Button(String text){
         super(text);
         setContentAreaFilled(false);
@@ -54,36 +66,78 @@ public class Button extends JButton {
         fgColour(Theme.BUTTON_TEXT);
     }
     
+    
+    /** 
+     * Wraps JButton.setBorder to return self rather than void.
+     * @param border New border.
+     * @return self
+     */
     public Button border(Border border) {
         this.setBorder(border);
         return this;
     }
 
+    
+    /** 
+     * Wraps JButton.setBounds to return self rather than void.
+     * @param x New x position.
+     * @param y New y position.
+     * @param width New width.
+     * @param height New height.
+     * @return self
+     */
     public Button bounds(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
         return this;
     }
 
-    public Button bounds(Rectangle r) {
-        this.setBounds(r);
+    
+    /**
+     * Wraps JButton.setBounds to return self rather than void.
+     * @param rect new bounds
+     * @return self
+     */
+    public Button bounds(Rectangle rect) {
+        this.setBounds(rect);
         return this;
     }
 
-    public Button actionListener(ActionListener al) {
-        this.addActionListener(al);
+    
+    /** 
+     * Wraps JButton.addActionListener to return self rather than void.
+     * @param actionListener ActionListener to add 
+     * @return self
+     */
+    public Button actionListener(ActionListener actionListener) {
+        this.addActionListener(actionListener);
         return this;
     }
 
+    
+    /** 
+     * @param bg new background colour
+     * @return self
+     */
     public Button bgColour(Color bg) {
         this.setBackground(bg);
         return this;
     }
 
+    
+    /** 
+     * @param fg new foreground colour
+     * @return self
+     */
     public Button fgColour(Color fg) {
         this.setForeground(fg);
         return this;
     }
 
+    
+    /** 
+     * Override the super.paintComponent so we can have a custom gradient on our buttons 
+     * @param g unsure.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         final Graphics2D g2 = (Graphics2D) g.create();
@@ -97,21 +151,41 @@ public class Button extends JButton {
         super.paintComponent(g);
     }
 
+    
+    /** 
+     * @param height New height
+     * @return self
+     */
     public Button setHeight(int height) {
         this.setBounds(getX(), getY(), getWidth(), height);
         return this;
     }
 
+    
+    /** 
+     * @param width New width
+     * @return self
+     */
     public Button setWidth(int width) {
         this.setBounds(getX(), getY(), width, getHeight());
         return this;
     }
 
+    
+    /** 
+     * @param x New x position
+     * @return self
+     */
     public Button setX(int x) {
         this.setBounds(x, getY(), getWidth(), getHeight());
         return this;
     }
 
+    
+    /** 
+     * @param y New y position
+     * @return self
+     */
     public Button setY(int y) {
         this.setBounds(getX(), y, getWidth(), getHeight());
         return this;

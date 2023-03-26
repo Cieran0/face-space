@@ -11,6 +11,11 @@ public class WelcomePage implements Screen {
     Button register;
     Label face;
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     public void addComponents(JFrame frame) {
         frame.add(login);
         frame.add(register);
@@ -44,11 +49,19 @@ public class WelcomePage implements Screen {
         );
     }
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return Main.MAIN_WINDOW_WIDTH;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return Main.MAIN_WINDOW_HEIGHT;

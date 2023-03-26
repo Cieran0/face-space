@@ -10,16 +10,29 @@ public class NewPostPopup implements Screen {
     private static final Integer WIDTH = 680;
     private static final Integer HEIGHT = 450;
 
+    
+    /** 
+     * @return The Page's Width.
+     */
     @Override
     public int getWidth() {
         return 680;
     }
 
+    
+    /** 
+     * @return The Page's Height.
+     */
     @Override
     public int getHeight() {
         return 450;
     }
 
+    
+    /** 
+     * Adds the components of the page to the JFrame.
+     * @param frame The JFrame the components are being added to.
+     */
     @Override
     public void addComponents(JFrame frame) {
         frame.add(content);

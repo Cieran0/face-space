@@ -5,6 +5,10 @@ import javax.swing.SwingConstants;
 
 public class DetailsPanel extends JPanel {
     
+    /** 
+     * Reloads the details panel.
+     * @param profile The User who's page is being viewed.
+     */
     public void reload(User profile) {
         this.removeAll();
 
@@ -110,6 +114,10 @@ public class DetailsPanel extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Creates the details panel.
+     * @param profile The User who's page is being viewed.
+     */
     public DetailsPanel(User profile) {
         super(null);
         this.setBackground(Theme.SECONDARY_BG);

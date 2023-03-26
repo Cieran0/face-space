@@ -22,6 +22,13 @@ public class PostsPanel extends JPanel {
     public JScrollBar scrollBar;
     private static Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
 
+    
+    /**
+     * Reloads the posts.
+     * @param profile the user who's page we are looking at.
+     * @param scrollValue position of the scroll wheel (0-100).
+     * @param selectedId selected filter to apply.
+     */
     public void reloadPosts(User profile, int scrollValue, int selectedId) {
         posts.removeAll();
         posts.add(scrollBar);
@@ -150,6 +157,12 @@ public class PostsPanel extends JPanel {
         posts.repaint();
     }
 
+    
+    /** 
+     * Reloads the panel.
+     * @param profile the user who's page we are looking at.
+     * @param selectedId selected filter to apply.
+     */
     public void reload(User profile, int selectedId) {
         this.removeAll();
         scrollBar = new JScrollBar(SwingConstants.VERTICAL,0,10,0,110);
@@ -241,6 +254,9 @@ public class PostsPanel extends JPanel {
         this.repaint();
     }
 
+    /*
+     * Creates the posts panels.
+     */
     public PostsPanel(User profile) {
         super(null);
         this.setBackground(Theme.ACCENT_BG);
