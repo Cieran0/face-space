@@ -16,9 +16,9 @@ public class Main {
     
     public static final Integer MAIN_WINDOW_WIDTH = 1280;
     public static final Integer MAIN_WINDOW_HEIGHT = 720;
-    public static JFrame mainWindow = new JFrame("DEBUG");
+    public static JFrame mainWindow = new JFrame("FaceSpace");
     public static Screen mainScreen = new WelcomePage();
-    public static JFrame popupWindow = new JFrame("DEBUG");
+    public static JFrame popupWindow = new JFrame("FaceSpace");
     public static Screen popupScreen;
     public static UserTree users = new UserTree();
     public static User currentUser = null;

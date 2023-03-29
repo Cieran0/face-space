@@ -8,7 +8,7 @@ import javax.swing.SwingConstants;
 
 public class SearchPage implements Screen{
     public final Integer WIDTH = 300;
-    public final Integer HEIGHT = 200;
+    public final Integer HEIGHT = 225;
 
     Label searchLabel;
     TextField searchField;
@@ -28,7 +28,7 @@ public class SearchPage implements Screen{
 
     public SearchPage(){
         searchButton = new Button("Search")
-        .bounds(50,115,200,50)
+        .bounds(50,125,200,50)
         .actionListener(new ActionListener() 
             {
                 public void actionPerformed(ActionEvent arg0){
@@ -54,10 +54,10 @@ public class SearchPage implements Screen{
 
         searchLabel = new Label("Search", SwingConstants.CENTER)
         .bigger()
-        .bounds(0,9,WIDTH,32);
+        .bounds(0,9,WIDTH,40);
 
         searchField = new TextField("")
-        .bounds(50,50,200,50);
+        .bounds(50,60,200,50);
     }
 
     
