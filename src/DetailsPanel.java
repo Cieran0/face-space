@@ -1,7 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class DetailsPanel extends JPanel {
     
@@ -11,6 +17,8 @@ public class DetailsPanel extends JPanel {
      */
     public void reload(User profile) {
         this.removeAll();
+
+        String[] themeOptions = {"Dark","Light","Red","Blue","Irn Bru"};
 
         Label fullName = new Label(profile.getFullName(),SwingConstants.CENTER)
         .big()
@@ -32,8 +40,45 @@ public class DetailsPanel extends JPanel {
         .bounds(0, 50 + ((showWorkPlace)? 25 : 0),300,50);
         boolean showHomeTown = !(profile.getHomeTown().toLowerCase().equals("hidden"));
 
+        Label theme = new Label("Theme: ",SwingConstants.CENTER)
+        .bright()
+        .bounds(0, 300, 300,100);
+
+        JComboBox<String> themeSelect = new JComboBox<String>(themeOptions);
+        themeSelect.setBounds(50,375,200,25);
+        themeSelect.setSelectedIndex(Theme.themeID);
+        themeSelect.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> cb  = (JComboBox<String>) e.getSource();
+                Object selected = cb.getSelectedItem();
+                for(int i =  0; i< themeOptions.length; i++){
+                    if(selected.equals(themeOptions[i])){
+                        Theme.changeTheme(i);
+                        Main.setMainScreen(new HomePage(profile));
+                    }
+                }
+            }
+        });
+        Border border = BorderFactory.createLineBorder(Theme.SECONDARY_FG);
+        themeSelect.setUI(new BasicComboBoxUI(){
+            @Override
+            public void configureArrowButton() {
+                super.configureArrowButton();
+                this.arrowButton.setBackground(Theme.SECONDARY_BG);
+                this.arrowButton.setForeground(Theme.SECONDARY_FG);
+                this.arrowButton.setBorder(border);
+                this.listBox.setBackground(Theme.SECONDARY_BG);
+                this.listBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBackground(Theme.SECONDARY_BG);
+                this.comboBox.setForeground(Theme.SECONDARY_FG);
+                this.comboBox.setBorder(border);
+            }
+        });
 
         this.add(fullName);
+        this.add(theme);
+        this.add(themeSelect);
         this.add(username);
         if(showWorkPlace)
             this.add(workPlace);

@@ -154,6 +154,7 @@ public class Main {
         int numberOfUsers = userList.size();
         try{
             FileWriter writer = new FileWriter("database.txt");
+            writer.write(Theme.themeID + "\n");
             writer.write(numberOfUsers + "\n");
             for (User user : userList) {
                 writer.write(user.toString());
@@ -182,6 +183,7 @@ public class Main {
         try{
             File f = new File("database.txt");
             Scanner scRead = new Scanner(f);
+            Theme.changeTheme(Integer.parseInt(scRead.nextLine()));
             int numberOfUsers = Integer.parseInt(scRead.nextLine());
             for (int i = 0; i < numberOfUsers; i++) {
 
